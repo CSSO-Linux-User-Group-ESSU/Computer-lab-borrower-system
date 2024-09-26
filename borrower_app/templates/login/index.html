@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,6 +72,7 @@
     <!----------------------- Main Container -------------------------->
     <form action="main_window/" method="POST">
         {% csrf_token %}
+        {% load static %}
 
          <div class="container d-flex justify-content-center align-items-center min-vh-100">
 
@@ -81,7 +84,7 @@
 
            <div class="col-md-6 rounded-4 d-flex align-items-center flex-column left-box" style="background: #f1ffee ;">
                <div class="featured-image mb-2 mt-5">
-                <img src="images/essu_logo.jpg" class="img-fluid" style="width: 280px;">
+                   <img src="{% static 'images/essu_logo.jpg' %}" class="img-fluid" style="width: 280px;">
                </div>
                <p class="fs-1 mt-4" style="font-family: 'Arial', Arial monospace; font-weight: 700; color: #124703">Borrower</p>
            </div>
