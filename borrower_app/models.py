@@ -18,9 +18,8 @@ class BorrowerInfo(models.Model):
     total_qty = models.CharField(max_length=5)
     other_qty = models.CharField(max_length=20)
 
-
     def __str__(self):
-        pass
+        return f" Borrower {self.last_name}, {self.first_name} {self.middle_initial}."
 
 
 
