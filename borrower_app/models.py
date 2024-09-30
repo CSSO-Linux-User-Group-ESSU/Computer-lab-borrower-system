@@ -17,6 +17,7 @@ class BorrowerInfo(models.Model):
     power_cord_qty = models.CharField(max_length=5)
     total_qty = models.CharField(max_length=5)
     other_qty = models.CharField(max_length=20)
+    # date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f" Borrower {self.last_name}, {self.first_name} {self.middle_initial}."

@@ -21,15 +21,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarColor01">
-          <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
-            </li>
-          </ul>
-          <form class="d-flex">
-            <input class="form-control me-sm-2" type="search" placeholder="Search">
-            <button class="btn btn-danger my-2 my-sm-0" type="submit">Search</button>
-          </form>
+
         </div>
       </div>
     </nav>
@@ -45,8 +37,8 @@
           <a class="nav-link" href="#">Settings</a>
         </nav>
       </div>
-
-
+    {% block content %}
+    {% endblock content %}
 
 </body>
 </html>
