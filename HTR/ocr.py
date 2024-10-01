@@ -91,7 +91,7 @@ if __name__ == "__main__":
         # Perform OCR on the resized image
         extracted_text = ocr_image(resized_img)
 
-        # Print the extracted text
+        # Print the extracted text.
         print("Extracted Text:")
         print(extracted_text)
     else:
