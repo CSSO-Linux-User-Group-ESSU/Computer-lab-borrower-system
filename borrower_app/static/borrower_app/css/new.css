@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
+body{
+    font-family: 'Poppins', sans-serif;
+    background: #f8fff6;
+}
+
+
+.side-bar {
+    background-color: #1d8500;
+    height: 1000px;
+    width: 140px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-radius: 2px;
+}
+
+.nav-link {
+    display: block;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-decoration: none;
+    color: white;
+    font-size: 15px;
+    text-align: left;
+    margin-top: 0px;
+    transition: background-color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #55cf4c;
+    background-color: #175813;
+}
+
+
+.logo {
+    margin: 0;
+    height: 70px;
+    width:  70px;
+    padding: 33px;
+    border-style: solid;
+    border-color: green;
+}
+
+.row_heading{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+
+h1 {
+    margin-left: 150px;
+    margin-right: 100px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+
+.scan-button {
+    background: blue;
+    padding: 20px 50px;
+    margin: 0px 135px;
+    font-size: 30px;
+}
+
+/* General table styling */
+.table-responsive {
+    margin: 20px 0;
+    overflow-x: auto;
+}
+
+table.borrowers {
+    width: 89%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    margin-left: 135px;
+}
+
+/* Header styling */
+table.borrowers th {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    text-align: left;
+    font-size: 14px;
+    border-bottom: 2px solid #ddd;
+}
+
+/* Body rows styling */
+table.borrowers td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 13px;
+    text-align: left;
+}
+
+/* Alternating row colors */
+table.borrowers tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table.borrowers tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Active row styling */
+.borrowers-active th {
+    background-color: #45a049;
+}

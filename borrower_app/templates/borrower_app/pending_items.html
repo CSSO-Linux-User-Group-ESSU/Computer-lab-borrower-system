@@ -1,47 +1,41 @@
-{% extends "borrower_app/main_index.html" %}
-
+{% extends "borrower_app/control_panel.html" %}
 
 {% block content %}
-<div class="content">
-    {% if all_info %}
-      <h1>Pending Item</h1>
+    <div class="content">
+      <h1 class="header">Pending Item</h1>
         <div class="table-responsive">
-            <table class="table table-hover">
+            <table class="borrowers">
+                <tr class="borrowers-active" >
 
-                <tr class="table-active border: 1px solid black" >
                     <th>Last Name</th>
                     <th>First Name</th>
-                    <th>Mid Initial</th>
+                    <th>Mid Name</th>
                     <th>Led</th>
                     <th>Monitor</th>
                     <th>Keyboard</th>
                     <th>Mouse</th>
                     <th>CPU</th>
                     <th>UPS</th>
-                    <th>Sub Cord</th>
+                    <th>ub Cord</th>
                     <th>Total</th>
 
                 </tr>
-              {% for info in all_info %}
+              {% for borrower in borrowers %}
                 <tr>
-                    <td>{{ info.last_name }}</td>
-                    <td>{{ info.first_name }}</td>
-                    <td>{{ info.middle_initial }}</td>
-                    <td>{{ info.led_qty }}</td>
-                    <td>{{ info.monitor_qty }}</td>
-                    <td>{{ info.keyboard_qty }}</td>
-                    <td>{{ info.mouse_qty }}</td>
-                    <td>{{ info.cpu_qty }}</td>
-                    <td>{{ info.ups_qty }}</td>
-                    <td>{{ info.sub_cord_qty }}</td>
-                    <td>{{ info.total_qty }}</td>
-                </tr>
+                    <td>{{ borrower.last_name }}</td>
+                    <td>{{ borrower.first_name }}</td>
+                    <td>{{ borrower.middle_name }}</td>
+                    <td>{{ borrower.led_qty }}</td>
+                    <td>{{ borrower.monitor_qty }}</td>
+                    <td>{{ borrower.keyboard_qty }}</td>
+                    <td>{{ borrower.mouse_qty }}</td>
+                    <td>{{ borrower.cpu_qty }}</td>
+                    <td>{{ borrower.ups_qty }}</td>
+                    <td>{{ borrower.sub_cord_qty }}</td>
+                    <td>{{ borrower.total }}</td>
+                    </tr>
               {% endfor %}
             </table>
         </div>
-    {% else %}
-        <h5>Hello world</h5>
-
-    {% endif %}
     </div>
 {% endblock content %}

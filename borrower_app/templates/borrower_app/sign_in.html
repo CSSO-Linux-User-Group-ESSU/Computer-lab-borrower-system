@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'borrower_app/css/sign_in.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM3KQh2p/5ZgZxuj+fYbPj4WmTgWgdm0M3RQtxg" crossorigin="anonymous">
+    <title>Sign In</title>
+</head>
+<body>
+
+    <form action="{% url 'login' %}" method="POST">
+        {% csrf_token %}
+        <div class="main-container">
+            <div class="login-container">
+                <div class="left-box">
+                    <div class="header-text">
+                        <h2>Sign in</h2>
+                    </div>
+                        <input  type="email" class="input-field" placeholder="Email" id="email" name="email">
+                        <input  type="text" class="input-field" placeholder="Username" id="username" name="username">
+                        <input type="password" class="input-field" placeholder="Password" id="password" name="password">
+                        <input type="password" class="input-field" placeholder="Confirm Password" id="confirm_password" name="confirm_password">
+                    <div class="input-group">
+                        <button class="login-btn" type="submit">Sign In</button>
+                    </div>
+                </div>
+                <div class="right-box">
+                    <div class="featured-image">
+                        <img src="{% static 'borrower_app/images/essu_logo.jpg' %}" class="img-fluid">
+                    </div>
+                    <p class="borrower-text">Borrower</p>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
