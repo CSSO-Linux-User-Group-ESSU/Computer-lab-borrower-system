@@ -25,7 +25,7 @@ body{
     transition: background-color 0.3s ease;
     background: #f8fff6;
     padding: 8px 12px;
-    border-radius: 5px;
+    border-radius: 20px;
 }
 
 .nav-home {
@@ -66,20 +66,42 @@ body{
 
 
 
-
-
 /* CSS for Home */
 
+.scan-printer-button{
+    background: green;
+    position: fixed;
+    margin: 0px 30px;
+    padding: 50px 180px;
+    font-weight: bold;
+    font-size: 25px;
+}
 
+.scan-paper-button{
+    background: Blue;
+    position: fixed;
+    margin: 150px 30px;
+    padding: 50px 180px;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.delete-button{
+    background: red;
+    position: fixed;
+    margin: 300px 30px;
+    padding: 50px 180px;
+    font-weight: bold;
+    font-size: 25px;
+}
 
 .pic-container{
     background-color: green;
-    height: 200px;
-    width: 200px;
-    display: flex;
-    position: fixed;
+    height: 500px;
+    width: 500px;
     align-items: center;
-    margin: 200px 200px;
+    margin: 0px 55%;
+    position: fixed;
 }
 
 
