@@ -4,16 +4,18 @@
     {% load static%}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Essu Borrower</title>
-    <link rel="stylesheet" href="{% static 'borrower_app/css/new.css' %}">
+    <title>ESSU Borrower</title>
+    <link rel="stylesheet" href="{% static 'borrower_app/css/style.css' %}">
 </head>
 <body>
-        <nav class="side-bar">
+        <nav class="nav-bar">
             <img class="logo" src="{% static 'borrower_app/images/essu_logo_no_text.png' %}">
-            <a class="nav-link active" href="{% url 'home' %}">Home</a>
-            <a class="nav-link active" href="{% url 'pending_items' %}">Pending Items</a>
-            <a class="nav-link active" href="{% url 'return_items' %}">Return Items</a>
+            <h2 class="heading">ESSU Borrower</h2>
+            <a class="nav-hover nav-home active" href="{% url 'home' %}">Home</a>
+            <a class="nav-hover nav-pending active" href="{% url 'pending_items' %}">Pending Items</a>
+            <a class="nav-hover nav-return active" href="{% url 'return_items' %}">Return Items</a>
         </nav>
+        <hr class="line">
     {% block content %}
     {% endblock content %}
 

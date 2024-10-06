@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
+body{
+    font-family: 'Poppins', sans-serif;
+    background: #f8fff6;
+}
+
+
+.nav-bar {
+    background-color: #f8fff6;
+    height: 70px;
+    width: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    position: fixed;
+    align-items: center;
+}
+
+.nav-home, .nav-pending, .nav-return {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    background: #f8fff6;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+.nav-home {
+    margin-left: 30%;
+}
+
+.nav-pending {
+    margin-left: 30px;
+}
+.nav-return {
+    margin-left: 30px;
+}
+
+.nav-hover:hover {
+    color: #55cf4c;
+    background-color: #175813;
+}
+
+.row_heading{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.logo {
+    margin: 0;
+    height: 50px;
+    width:  50px;
+    padding: 33px;
+}
+
+
+
+.line{
+    margin-top: 70px;
+    height: 2px;
+    background-color: green;
+}
+
+
+
+
+
+/* CSS for Home */
+
+
+
+.pic-container{
+    background-color: green;
+    height: 200px;
+    width: 200px;
+    display: flex;
+    position: fixed;
+    align-items: center;
+    margin: 200px 200px;
+}
+
+
+
+/* CSS for Pending Items */
+h1 {
+    margin-left: 20px;
+    margin-right: 0px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+table.borrowers {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    margin-left: 0px;
+}
+
+/* General table styling */
+.table-responsive {
+    margin: 10px 0;
+    overflow-x: auto;
+}
+
+
+/* Header styling */
+table.borrowers th {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+    border-bottom: 2px solid #ddd;
+}
+
+/* Body rows styling */
+table.borrowers td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 13px;
+    text-align: center;
+}
+
+/* Alternating row colors */
+table.borrowers tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table.borrowers tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Active row styling */
+.borrowers-active th {
+    background-color: #45a049;
+}
+
+
+

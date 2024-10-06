@@ -5,9 +5,8 @@
       <h1 class="header">Pending Item</h1>
         <div class="table-responsive">
             <table class="borrowers">
-                <tr class="borrowers-active" >
-
-                    <th>Last Name</th>
+                <tr class="borrowers-active ">
+                    <th class="centered">Last Name</th>
                     <th>First Name</th>
                     <th>Mid Name</th>
                     <th>Led</th>
@@ -16,7 +15,7 @@
                     <th>Mouse</th>
                     <th>CPU</th>
                     <th>UPS</th>
-                    <th>ub Cord</th>
+                    <th>Sub Cord</th>
                     <th>Total</th>
 
                 </tr>
@@ -33,7 +32,7 @@
                     <td>{{ borrower.ups_qty }}</td>
                     <td>{{ borrower.sub_cord_qty }}</td>
                     <td>{{ borrower.total }}</td>
-                    </tr>
+                </tr>
               {% endfor %}
             </table>
         </div>
