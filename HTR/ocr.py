@@ -23,19 +23,16 @@ def preprocess_image(image_path):
         mask = cv2.inRange(hsv, lower_blue, upper_blue)
 
         # The extracted blue ink
-        blue_img = cv2.bitwise_and(img,img,mask=mask)
+        blue_img = cv2.bitwise_and(img, img, mask=mask)
 
         # Convert the extracted image to grayscale
         gray = cv2.cvtColor(blue_img, cv2.COLOR_BGR2GRAY)
 
-
         # Denoise the image using Gaussian Blur
         denoised = cv2.GaussianBlur(gray, (5, 5), 0)
 
-
         # Apply binary thresholding (Binarization)
         _, binary_img = cv2.threshold(denoised, 0, 255, cv2.THRESH_BINARY)
-
 
         # Morphological transformation to clean the image
         kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 1))
@@ -45,6 +42,7 @@ def preprocess_image(image_path):
     except Exception as e:
         print(f"Error in preprocess_image: {e}")
         return None
+
 
 def resize_image(image, scale_factor=2):
     """Resize the image to improve OCR accuracy."""
@@ -57,6 +55,7 @@ def resize_image(image, scale_factor=2):
     except Exception as e:
         print(f"Error in resize_image: {e}")
         return image
+
 
 def ocr_image(image):
     """Perform OCR on the preprocessed image."""
@@ -73,6 +72,7 @@ def ocr_image(image):
         print(f"Error in ocr_image: {e}")
         return ""
 
+
 if __name__ == "__main__":
 
     # Path to the image
@@ -84,7 +84,7 @@ if __name__ == "__main__":
     if preprocessed_img is not None:
         # Resize the image for better OCR accuracy
         resized_img = resize_image(preprocessed_img)
-        
+
         # Save the processed image 
         cv2.imwrite('HTR/img_blue.jpg', resized_img)
 

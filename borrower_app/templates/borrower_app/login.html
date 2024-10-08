@@ -11,8 +11,7 @@
 </head>
 <body>
 
-    <form action="{% url 'control_panel' %}" method="POST">
-        {% csrf_token %}
+
         <div class="main-container">
             <div class="login-container">
                 <div class="left-box">
@@ -25,15 +24,18 @@
                     <div class="header-text">
                         <h2>Login</h2>
                     </div>
-                        <input  type="text" class="input-field" placeholder="Username" id="username" name="username">
-                        <input type="password" class="input-field" placeholder="Password" id="password" name="password">
+                    <form action="{% url 'control_panel' %}" method="POST">
+                    {% csrf_token %}
+                        <input  type="text" class="input-field" placeholder="Username" id="username" name="username" required>
+                        <input type="password" class="input-field" placeholder="Password" id="password" name="password" required>
                     <div class="input-group">
                         <button class="login-btn" type="submit">Login</button>
                         <a href="{% url 'sign_in' %}" class="nav-link active">Create Your Acc  &#8594</a>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </form>
+
 </body>
 </html>

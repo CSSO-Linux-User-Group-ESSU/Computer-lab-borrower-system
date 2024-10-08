@@ -2,39 +2,102 @@
 
 {% block content %}
     <div class="content">
-      <h1 class="header">Pending Item</h1>
+        <h1 class="header">Pending Items</h1>
+
+        <!-- Modify and Delete buttons outside the table -->
+        <button id="modify-button" class="modify-btn-pending" disabled>Modify Selected</button>
+        <button id="delete-button" class="delete-btn-pending" disabled>Delete Selected</button>
+
         <div class="table-responsive">
             <table class="borrowers">
-                <tr class="borrowers-active ">
-                    <th class="centered">Last Name</th>
-                    <th>First Name</th>
-                    <th>Mid Name</th>
-                    <th>Led</th>
-                    <th>Monitor</th>
-                    <th>Keyboard</th>
-                    <th>Mouse</th>
-                    <th>CPU</th>
-                    <th>UPS</th>
-                    <th>Sub Cord</th>
-                    <th>Total</th>
-
-                </tr>
-              {% for borrower in borrowers %}
-                <tr>
-                    <td>{{ borrower.last_name }}</td>
-                    <td>{{ borrower.first_name }}</td>
-                    <td>{{ borrower.middle_name }}</td>
-                    <td>{{ borrower.led_qty }}</td>
-                    <td>{{ borrower.monitor_qty }}</td>
-                    <td>{{ borrower.keyboard_qty }}</td>
-                    <td>{{ borrower.mouse_qty }}</td>
-                    <td>{{ borrower.cpu_qty }}</td>
-                    <td>{{ borrower.ups_qty }}</td>
-                    <td>{{ borrower.sub_cord_qty }}</td>
-                    <td>{{ borrower.total }}</td>
-                </tr>
-              {% endfor %}
+                <thead>
+                    <tr>
+                        <th>Select</th> <!-- Add a header for checkboxes -->
+                        <th>Last Name</th>
+                        <th>First Name</th>
+                        <th>Mid Name</th>
+                        <th>Led</th>
+                        <th>Monitor</th>
+                        <th>Keyboard</th>
+                        <th>Mouse</th>
+                        <th>CPU</th>
+                        <th>UPS</th>
+                        <th>Sub Cord</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for borrower in borrowers %}
+                        <tr>
+                            <td>
+                                <input type="checkbox" class="select-borrower" value="{{ borrower.id }}">
+                            </td> <!-- Ensure value contains the borrower ID -->
+                            <td>{{ borrower.last_name }}</td>
+                            <td>{{ borrower.first_name }}</td>
+                            <td>{{ borrower.middle_name }}</td>
+                            <td>{{ borrower.led_qty }}</td>
+                            <td>{{ borrower.monitor_qty }}</td>
+                            <td>{{ borrower.keyboard_qty }}</td>
+                            <td>{{ borrower.mouse_qty }}</td>
+                            <td>{{ borrower.cpu_qty }}</td>
+                            <td>{{ borrower.ups_qty }}</td>
+                            <td>{{ borrower.sub_cord_qty }}</td>
+                            <td>{{ borrower.total }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
             </table>
         </div>
     </div>
-{% endblock content %}
+
+    <!-- JavaScript to handle selection and deletion -->
+    <script>
+        const modifyButton = document.getElementById('modify-button');
+        const deleteButton = document.getElementById('delete-button');
+        const checkboxes = document.querySelectorAll('.select-borrower');
+
+        // Enable buttons if any checkbox is selected
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                const anyChecked = [...checkboxes].some(cb => cb.checked);
+                modifyButton.disabled = !anyChecked;  // Disable if none checked
+                deleteButton.disabled = !anyChecked;  // Disable if none checked
+            });
+        });
+
+        // Handle modify button click
+        modifyButton.addEventListener('click', () => {
+            // Gather selected borrower IDs
+            const selectedIds = [...checkboxes].filter(cb => cb.checked).map(cb => cb.value);
+
+            if (selectedIds.length === 1) {
+                // Redirect to modify page with selected ID
+                window.location.href = "{% url 'modify_borrower' 0 %}".replace("0", selectedIds[0]);
+            } else {
+                alert("Please select exactly one borrower to modify.");
+            }
+        });
+
+        // Handle delete button click
+        deleteButton.addEventListener('click', () => {
+            const selectedIds = [...checkboxes].filter(cb => cb.checked).map(cb => cb.value);
+
+            if (selectedIds.length > 0) {
+                fetch("{% url 'delete_borrowers' %}", {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": "{{ csrf_token }}",
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ borrower_ids: selectedIds })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload(); // Reload the page after successful deletion
+                    }
+                });
+            }
+        });
+    </script>
+{% endblock %}
