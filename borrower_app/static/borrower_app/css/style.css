@@ -86,15 +86,6 @@ body{
     font-size: 25px;
 }
 
-.delete-button{
-    background: red;
-    position: fixed;
-    margin: 300px 30px;
-    padding: 50px 180px;
-    font-weight: bold;
-    font-size: 25px;
-}
-
 .pic-container{
     background-color: green;
     height: 500px;
