@@ -2,9 +2,25 @@
 
 {% block content %}
 
-    <button class="scan-printer-button">Scan for Printer</button>
-    <button class="scan-paper-button">Scan Paper</button>
+    <button class="scan-printer-button" onclick="ScanPrinter()">
+        Scan for Printer
+    </button>
+    
+    <button class="scan-paper-button">
+        Scan Paper
+    </button>
+
     <nav class="pic-container">
 
     </nav>
+
+    <script>
+        function ScanPrinter(){
+            fetch('/scan_printer/')
+            .then(response => response.text())
+            .then(data => alert(data))
+            .catch(error => console.error("Error:", error))
+        }
+    </script>
+
 {% endblock content %}

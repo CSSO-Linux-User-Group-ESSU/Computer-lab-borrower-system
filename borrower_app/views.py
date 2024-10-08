@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 import django.contrib.messages as messages
 from .models import BorrowerInfo
 from django.contrib.auth import login, authenticate
+from django.http import HttpResponse
+import subprocess
 
 
 # Create your views here.
@@ -66,3 +68,10 @@ def pending_items(request):
         })
     return render(request, 'borrower_app/pending_items.html', {'borrowers': borrower_data}, )
 
+def scan_printer(request):
+    has_printer = subprocess.call(['lpstat', '-p'])
+    context = {'has_printer': has_printer}
+    if has_printer:
+        return HttpResponse('Has Printer')
+    else:
+        return HttpResponse('No Printer')
