@@ -3,6 +3,7 @@ import django.contrib.messages as messages
 from .models import BorrowerInfo
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponse
+from django.contrib.auth.models import User
 import subprocess
 
 
@@ -18,13 +19,14 @@ def control_panel(request):
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
-
-        if password == "admin":
-            return render(request, 'borrower_app/home.html')
-        else:
-            messages.error(request,"Wrong admin or password")
-            return redirect("login_window")
-    return render(request, 'borrower_app/home.html')
+        try:
+            user = authenticate(request, username=username, password=password)
+            login(request,user)
+            return redirect("home")
+        except User.DoesNotExist:
+            return redirect("login")
+        
+    return redirect("login")
 
 # def new_ui(request):
 #     if request.method=="POST":
@@ -75,3 +77,13 @@ def scan_printer(request):
         return HttpResponse('Has Printer')
     else:
         return HttpResponse('No Printer')
+    
+def scan_paper(request):
+    image_path = '/HTR/scannedImages/scanned_form.png'
+    with open(image_path, 'wb') as f:
+        subprocess.run(['scanimage', '--format=png', '--mode', 'Color', '--resolution', '300' ], stdout=f)
+    scanned = subprocess.call(['python3', 'HTR/ocr.py', image_path])
+    if scanned:
+        return HttpResponse('Scan Complete')
+    else:
+        return HttpResponse('Scan Incomplete')

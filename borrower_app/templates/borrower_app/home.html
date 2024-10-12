@@ -6,7 +6,7 @@
         Scan for Printer
     </button>
     
-    <button class="scan-paper-button">
+    <button class="scan-paper-button" onclick="ScanPaper()">
         Scan Paper
     </button>
 
@@ -17,6 +17,13 @@
     <script>
         function ScanPrinter(){
             fetch('/scan_printer/')
+            .then(response => response.text())
+            .then(data => alert(data))
+            .catch(error => console.error("Error:", error))
+        }
+
+        function ScanPaper(){
+            fetch('/scan_paper/')
             .then(response => response.text())
             .then(data => alert(data))
             .catch(error => console.error("Error:", error))

@@ -68,19 +68,22 @@ body{
 
 /* CSS for Home */
 
+
 .scan-printer-button{
     background: green;
+    color: #ddd;
     position: fixed;
     margin: 0px 30px;
-    padding: 50px 180px;
+    padding: 100px 25px;
     font-weight: bold;
-    font-size: 25px;
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 .scan-paper-button{
     background: Blue;
     position: fixed;
-    margin: 150px 30px;
+    margin: 300px 30px;
     padding: 50px 180px;
     font-weight: bold;
     font-size: 25px;
