@@ -3,18 +3,28 @@
 {% block content %}
 
 
+        <div class="home-container">
+            <button class="scan-printer-button" onclick="ScanPrinter()">
+                Scan for Printer
+            </button>
+            <br>
+            <button class="scan-paper-button">
+                Scan Paper
+            </button>
+            <br>
+            <form method="POST" action="{% url 'upload_and_process_file' %}" class="">
+            {% csrf_token %}
+            <button class="manual-button">Enter Manually</button>
+            </form>
+        </div>
+        <br>
 
-    <nav class="pic-container"></nav>
-     <button class="scan-printer-button" onclick="ScanPrinter()">
-        Scan for Printer
-    </button>
-    <button class="scan-paper-button">
-        Scan Paper
-    </button>
-    <button class="delete-button">Enter Manually</button>
-    <nav class="pic-container">
+        <div class="pic-container"></div>
+        <button class="retry-btn">Retry</button>
+        <button class="next-btn">Next</button>
 
-    </nav>
+
+
 
 
     <script>

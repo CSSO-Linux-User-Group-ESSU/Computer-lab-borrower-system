@@ -2,7 +2,7 @@
 
 body{
     font-family: 'Poppins', sans-serif;
-    background: white;
+    background: #edfaec;
 }
 
 
@@ -31,8 +31,7 @@ body{
     transition: background-color 0.3s ease;
     background: #f8fff6;
     padding: 8px 12px;
-    border-radius: 10px 10px 0 0;
-
+    border-radius: 20px;
 }
 
 .nav-home {
@@ -47,17 +46,13 @@ body{
 }
 
 .nav-hover:hover {
-    color: #edfbe9;
-    background-color: #124703;
-    border-radius: 10px 10px 0 0;
-
+    color: #55cf4c;
+    background-color: #278322;
 }
 
 .nav-active {
-    color: #e1ede0;
+    color: #55cf4c;
     background-color: #175813;
-    border-radius: 10px 10px 0 0;
-
 }
 
 .row_heading{
@@ -84,73 +79,39 @@ body{
 
 /* CSS for Home */
 .home-container {
-    width: 56%;
-    height: 510px;
-    background-color: #f8f8f8;
-    border: None;
-    top: 72px;
-    left: 0;
-    position: fixed;
-    align-content: center;
-
-}
-
-
-.scan-printer-button, .scan-paper-button, .manual-button{
-    background: #d1edcf;
-    font-size: 25px;
-    border: None;
-    border-radius: 10px;
-    width: 70%;
-    height: 100px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-left: 100px;
-}
-
-.scan-printer-button:active {
-    background-color: #96c693;
-}
-.scan-paper-button:active {
-    background-color: #96c693;
-}
-.manual-button:active {
-    background-color: #96c693;
-}
-.pic-container{
+    width: 400px;
+    height: 400px;
     background-color: white;
-    height: 370px;
-    width: 350px;
+    margin: 20px;
+    padding: 20px;
+     border: 2px solid #ccc;
+}
+
+
+.scan-printer-button{
+    background: pink;
+    font-size: 25px;
+}
+
+.scan-paper-button{
+    background: pink;
+    font-size: 25px;
+}
+
+.manual-button {
+    background: pink;
+    font-size: 25px;
+}
+
+.pic-container{
+    background-color: green;
+    height: 500px;
+    width: 500px;
     align-items: center;
-    align-content: center;
-    margin-left:64.5%;
-    border-style: solid;
-    border-width: 2px;
-    margin-top: 1%
-}
-
-.retry-btn{
-    margin-left:70%;
-    margin-top: 1%;
+    margin: 0px 55%;
     position: fixed;
-    background-color: #f8f8f8;
-    border-color: #ff9292;
-    border-style: solid;
-    border-width: 1px;
-    padding: 10px 30px;
-    border-radius: 5px;
-
 }
 
-.next-btn{
-    margin-left: 79.1%;
-    margin-top: 1%;
-    position: fixed;
-    background-color: #d1edcf;
-    border: none;
-    padding: 10px 30px;
-    border-radius: 5px;
-}
 
 
 /* CSS for Pending Items */

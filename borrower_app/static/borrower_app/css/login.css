@@ -102,20 +102,3 @@ body {
 }
 
 
-
-
-@media (max-width: 768px) {
-    .login-container {
-        flex-direction: column;
-        width: 90%;
-    }
-
-    .left-box {
-        height: 150px;
-        padding: 20px;
-    }
-
-    .right-box {
-        padding: 20px;
-    }
-}

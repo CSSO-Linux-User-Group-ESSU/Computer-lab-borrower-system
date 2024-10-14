@@ -5,6 +5,66 @@ from django.contrib.auth import login, authenticate
 from django.http import JsonResponse
 from django.http import HttpResponse
 import subprocess
+from .form import UploadFileForm, BorrowerForm
+import json
+from openpyxl import load_workbook
+
+
+
+def success_page(request):
+    return render(request,"borrower_app/success_page.html")
+
+def upload_and_process_file(request):
+    if request.method == 'POST':
+        # Handle file upload
+        file_form = UploadFileForm(request.POST, request.FILES)
+
+        if file_form.is_valid():
+            # Get the uploaded file
+            uploaded_file = request.FILES['files']
+
+            # Load the Excel workbook using openpyxl
+            wb = load_workbook(uploaded_file)
+            sheet = wb.active  # Assuming the data is in the active sheet
+
+            # Iterate through the rows of the Excel sheet (assuming first row is headers)
+            for row in sheet.iter_rows(min_row=2, values_only=True):  # Skipping header row
+                last_name, first_name, middle_name, projector_qty, led_qty, monitor_qty, keyboard_qty, mouse_qty, cpu_qty, ups_qty, sub_cord_qty, power_cord_qty = row
+
+                # Populate the BorrowerForm with the extracted data
+                borrower_data = {
+                    'last_name': last_name,
+                    'first_name': first_name,
+                    'middle_name': middle_name,
+                    'projector_qty': projector_qty,
+                    'led_qty': led_qty,
+                    'monitor_qty': monitor_qty,
+                    'keyboard_qty': keyboard_qty,
+                    'mouse_qty': mouse_qty,
+                    'cpu_qty': cpu_qty,
+                    'ups_qty': ups_qty,
+                    'sub_cord_qty': sub_cord_qty,
+                    'power_cord_qty': power_cord_qty,
+                }
+
+                # Create a new BorrowerInfo object using the BorrowerForm
+                borrower_form = BorrowerForm(borrower_data)
+
+                if borrower_form.is_valid():
+                    # Save the data into the database
+                    borrower_form.save()
+                else:
+                    # Handle form errors (if any)
+                    print(f"Form errors for row: {borrower_form.errors}")
+
+            # After processing, redirect to a success page or return a success response
+            return redirect('success_page')  # Replace 'success_page' with your actual URL name
+
+    else:
+        file_form = UploadFileForm()
+
+    # Render the form for file upload
+    return render(request, 'borrower_app/upload_and_process_file.html', {'file_form': file_form})
 
 
 # Create your views here.
@@ -17,35 +77,21 @@ def sign_in(request):
 
 
 def control_panel(request):
-
     if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST.get("password")
+        name = request.POST.get("username")  # Safely retrieve the username
+        password = request.POST.get("password")  # Safely retrieve the password
 
-        if password == "admin":
-            return render(request, 'borrower_app/home.html')
+        # Authenticate the user
+        user = authenticate(request, username=name, password=password)
+
+        if user is not None:
+            login(request, user)  # Log the user in
+            return redirect('home')  # Redirect to the home page after successful login
         else:
-            messages.error(request,"Wrong admin or password")
-            return redirect("login_window")
-    return render(request, 'borrower_app/home.html')
+            messages.error(request, "Wrong username or password! Please try again.")
+            return redirect('login')  # Redirect to the login page on error
 
-
-# def control_panel(request):
-#     if request.method == "POST":
-#         name = request.POST.get("username")  # Safely retrieve the username
-#         password = request.POST.get("password")  # Safely retrieve the password
-#
-#         # Authenticate the user
-#         user = authenticate(request, username=name, password=password)
-#
-#         if user is not None:
-#             login(request, user)  # Log the user in
-#             return redirect('home')  # Redirect to the home page after successful login
-#         else:
-#             messages.error(request, "Wrong username or password! Please try again.")
-#             return redirect('login_window')  # Redirect to the login page on error
-#
-#     return render(request, 'borrower_app/login.html')  # Render the login page for GET requests
+    return render(request, 'borrower_app/login.html')  # Render the login page for GET requests
 
 
 def home(request):
@@ -79,8 +125,6 @@ def pending_items(request):
 
 
 
-# Existing views...
-
 def delete_borrower(request, borrower_id):
     borrower = get_object_or_404(BorrowerInfo, id=borrower_id)
 
@@ -95,8 +139,7 @@ def delete_borrower(request, borrower_id):
 
 def delete_borrowers(request):
     if request.method == "POST":
-        # Get the list of borrower IDs from the request
-        import json
+
         data = json.loads(request.body)
         borrower_ids = data.get('borrower_ids', [])
 
@@ -107,30 +150,7 @@ def delete_borrowers(request):
         return JsonResponse({'success': True})
     return JsonResponse({'success': False})
 
-def pending_items(request):
-    borrowers = BorrowerInfo.objects.all()
-    borrower_data = []
-    for borrower in borrowers:
-        total = borrower.total_quantity()
-        borrower_data.append({
-            'id': borrower.id,  # Include the borrower ID for delete functionality
-            'last_name': borrower.last_name,
-            'first_name': borrower.first_name,
-            'middle_name': borrower.middle_name,
-            'led_qty': borrower.led_qty,
-            'monitor_qty': borrower.monitor_qty,
-            'keyboard_qty': borrower.keyboard_qty,
-            'mouse_qty': borrower.mouse_qty,
-            'cpu_qty': borrower.cpu_qty,
-            'ups_qty': borrower.ups_qty,
-            'sub_cord_qty': borrower.sub_cord_qty,
-            'total': total,
-        })
-    return render(request, 'borrower_app/pending_items.html', {'borrowers': borrower_data})
 
-
-
-# Edit Borrower View
 def edit_borrower(request, borrower_id):
     borrower = get_object_or_404(BorrowerInfo, id=borrower_id)
 
@@ -150,6 +170,7 @@ def edit_borrower(request, borrower_id):
         return redirect('pending_items')  # Redirect to the pending items page after saving
 
     return render(request, 'borrower_app/edit_borrower.html', {'borrower': borrower})
+
 
 def scan_printer(request):
     has_printer = subprocess.call(['lpstat', '-p'])

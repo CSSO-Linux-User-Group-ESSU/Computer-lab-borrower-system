@@ -2,8 +2,49 @@
 
 {% block content %}
 {% load static %}
-<div class="content">
-      <h1>Return items</h1>
-      <p>This is where the main content of your page will go. The sidebar remains fixed on the left.</p>
-</div>
+      <div class="content">
+            <h1 class="pend-heading">Return items</h1>
+            <div class="table-responsive">
+                  <table class="borrowers">
+                      <thead>
+                          <tr>
+                              <th>Select</th> <!-- Add a header for checkboxes -->
+                              <th>Last Name</th>
+                              <th>First Name</th>
+                              <th>Mid Name</th>
+                              <th>Led</th>
+                              <th>Monitor</th>
+                              <th>Keyboard</th>
+                              <th>Mouse</th>
+                              <th>CPU</th>
+                              <th>UPS</th>
+                              <th>Sub Cord</th>
+                              <th>Total</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {% for borrower in borrowers %}
+                              <tr>
+                                  <td>
+                                      <input type="checkbox" class="select-borrower" value="{{ borrower.id }}">
+                                  </td>
+                                  <td>{{ borrower.last_name }}</td>
+                                  <td>{{ borrower.first_name }}</td>
+                                  <td>{{ borrower.middle_name }}</td>
+                                  <td>{{ borrower.led_qty }}</td>
+                                  <td>{{ borrower.monitor_qty }}</td>
+                                  <td>{{ borrower.keyboard_qty }}</td>
+                                  <td>{{ borrower.mouse_qty }}</td>
+                                  <td>{{ borrower.cpu_qty }}</td>
+                                  <td>{{ borrower.ups_qty }}</td>
+                                  <td>{{ borrower.sub_cord_qty }}</td>
+                                  <td>{{ borrower.total }}</td>
+                              </tr>
+                          {% endfor %}
+                      </tbody>
+                  </table>
+              </div>
+      </div>
+
+
 {% endblock content %}

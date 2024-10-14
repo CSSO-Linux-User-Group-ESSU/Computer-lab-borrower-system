@@ -2,7 +2,7 @@
 
 {% block content %}
 
-        <form method="POST"  action="{% url 'modify_borrower' borrower.id %}">
+        <form method="POST"  action="% url 'upload_and_process_file' %">
             {% csrf_token %}
             <h1 class="form-header">FORM</h1>
             <div class="data-container">

@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="content">
-        <h1 class="header">Pending Items</h1>
+        <h1 class="pend-heading">Pending Items</h1>
 
         <!-- Modify and Delete buttons outside the table -->
         <button id="modify-button" class="modify-btn-pending" disabled>Modify Selected</button>
@@ -31,7 +31,7 @@
                         <tr>
                             <td>
                                 <input type="checkbox" class="select-borrower" value="{{ borrower.id }}">
-                            </td> <!-- Ensure value contains the borrower ID -->
+                            </td>
                             <td>{{ borrower.last_name }}</td>
                             <td>{{ borrower.first_name }}</td>
                             <td>{{ borrower.middle_name }}</td>
@@ -100,4 +100,4 @@
             }
         });
     </script>
-{% endblock %}
+{% endblock content %}
