@@ -3,37 +3,45 @@
 {% block content %}
 
 
-        <div class="home-container">
-            <button class="scan-printer-button" onclick="ScanPrinter()">
-                Scan for Printer
-            </button>
-            <br>
-            <button class="scan-paper-button">
-                Scan Paper
-            </button>
-            <br>
-            <form method="POST" action="{% url 'upload_and_process_file' %}" class="">
-            {% csrf_token %}
-            <button class="manual-button">Enter Manually</button>
-            </form>
-        </div>
-        <br>
 
-        <div class="pic-container"></div>
-        <button class="retry-btn">Retry</button>
-        <button class="next-btn">Next</button>
+<nav class="pic-container"></nav>
+<button class="scan-printer-button" onclick="ScanPrinter()">
+    Scan for Printer
+</button>
+
+<button id="ScanPaper" class="scan-paper-button" onclick="ScanPaper()" disabled>
+    Scan Paper
+</button>
+
+<button class="delete-button">Enter Manually</button>
+<nav class="pic-container">
+
+</nav>
 
 
+<script>
+    function ScanPrinter() {
+        fetch('/scan_printer')
+            .then(response => response.text())
+            .then(data => {
+                alert(data)
+                if (data === 'Has Printer') {
+                    document.getElementById("ScanPaper").disabled = false;
+                } else {
+                    document.getElementById("ScanPaper").disabled = true;
+                }
+            })
+            .catch(error => console.error("Error:", error))
+    };
 
-
-
-    <script>
-        function ScanPrinter(){
-            fetch('/scan_printer/')
+    function ScanPaper() {
+        fetch('/scan/')
             .then(response => response.text())
             .then(data => alert(data))
             .catch(error => console.error("Error:", error))
-        }
-    </script>
+
+    };
+
+</script>
 
 {% endblock content %}

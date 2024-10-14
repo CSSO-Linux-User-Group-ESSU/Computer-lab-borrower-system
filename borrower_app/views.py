@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 import django.contrib.messages as messages
 from .models import BorrowerInfo
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate,logout
 from django.http import JsonResponse
 from django.http import HttpResponse
 import subprocess
@@ -74,6 +74,10 @@ def logins(request):
 
 def sign_in(request):
     return render(request, 'borrower_app/sign_in.html')
+
+def log_out(request):
+    logout(request)
+    return redirect('/')
 
 
 def control_panel(request):
@@ -173,10 +177,21 @@ def edit_borrower(request, borrower_id):
 
 
 def scan_printer(request):
-    has_printer = subprocess.call(['lpstat', '-p'])
-    context = {'has_printer': has_printer}
-    if has_printer:
+    has_printer = subprocess.run('lpstat -p', shell=True)
+    if has_printer == 0:
         return HttpResponse('Has Printer')
     else:
         return HttpResponse('No Printer')
 
+def scan_paper(request):
+    image_path = 'HTR/scannedImages/scanned_form.png'
+    with open(image_path, 'wb') as f:
+        is_scan = subprocess.run('scanimage --format=png --mode Color --resolution 300', stdout=f, shell=True)
+        if is_scan == 0:
+            scan = subprocess.run(f'python3 HTR/ocr.py {image_path}', shell=True)
+            if scan == 0:
+                return HttpResponse('Scanned')
+            else:
+                return HttpResponse('Not Scanned')
+        else:
+            return HttpResponse('Not Scanned')
