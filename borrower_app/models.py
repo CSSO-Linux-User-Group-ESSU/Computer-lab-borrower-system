@@ -16,6 +16,10 @@ class BorrowerInfo(models.Model):
     sub_cord_qty = models.IntegerField(max_length=5)
     power_cord_qty = models.IntegerField(max_length=5)
 
+
+
+
+
     def __str__(self):
         return f" Borrower {self.last_name}, {self.first_name} {self.middle_name}."
 
@@ -28,4 +32,6 @@ class BorrowerInfo(models.Model):
                 self.ups_qty +
                 self.sub_cord_qty)
 
+class User(models.Model):
+    pass
 

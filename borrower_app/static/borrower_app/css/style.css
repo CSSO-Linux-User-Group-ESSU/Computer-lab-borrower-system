@@ -6,6 +6,8 @@ body{
 }
 
 
+/* CSS for Control Panel */
+
 .nav-bar {
     background-color: #f8fff6;
     height: 70px;
@@ -17,7 +19,7 @@ body{
     align-items: center;
 }
 
-.nav-home, .nav-pending, .nav-return {
+.nav-home, .nav-pending, .nav-return, .nav-log{
     text-decoration: none;
     color: black;
     font-weight: bold;
@@ -40,6 +42,11 @@ body{
 }
 
 .nav-hover:hover {
+    color: #55cf4c;
+    background-color: #175813;
+}
+
+.nav-active {
     color: #55cf4c;
     background-color: #175813;
 }
@@ -68,20 +75,26 @@ body{
 
 /* CSS for Home */
 
-
 .scan-printer-button{
-    background: green;
-    color: #ddd;
+    background: pink;
     position: fixed;
     margin: 0px 30px;
-    padding: 100px 25px;
+    padding: 50px 180px;
     font-weight: bold;
-    font-size: 20px;
-    font-family: 'Courier New', Courier, monospace;
+    font-size: 25px;
 }
 
 .scan-paper-button{
-    background: Blue;
+    background: pink;
+    position: fixed;
+    margin: 150px 30px;
+    padding: 50px 180px;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.delete-button{
+    background: pink;
     position: fixed;
     margin: 300px 30px;
     padding: 50px 180px;
@@ -99,6 +112,22 @@ body{
 }
 
 
+.delete-button-outside {
+    padding: 10px 20px;
+    background-color: #ff4c4c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.delete-button-outside:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+
 
 /* CSS for Pending Items */
 h1 {
@@ -106,13 +135,38 @@ h1 {
     margin-right: 0px;
     margin-top: 10px;
     margin-bottom: 0px;
+    position: fixed;
 }
+
+.modify-btn-pending, .delete-btn-pending {
+    color: black;
+    font-weight: bold;
+    font-size: 16px;
+    background: #f8fff6;
+    padding: 8px 30px;
+    border-radius: 10px;
+    position: fixed;
+}
+
+.modify-btn-pending {
+    margin-top: 1%;
+    margin-left: 60%;
+}
+
+.delete-btn-pending {
+    margin-top: 1%;
+    margin-left:75%;
+}
+
+
+
 
 table.borrowers {
     width: 100%;
     border-collapse: collapse;
     font-family: Arial, sans-serif;
-    margin-left: 0px;
+    margin: 5% 0px;
+    position: fixed;
 }
 
 /* General table styling */

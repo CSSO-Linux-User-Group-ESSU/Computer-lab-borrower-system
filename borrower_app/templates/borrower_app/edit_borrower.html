@@ -1,0 +1,41 @@
+{% extends "borrower_app/control_panel.html" %}
+
+{% block content %}
+    <div class="content">
+        <form method="POST">
+            {% csrf_token %}
+            <label>Last Name:</label>
+            <input type="text" name="last_name" value="{{ borrower.last_name }}" required>
+            <br>
+            <label>First Name:</label>
+            <input type="text" name="first_name" value="{{ borrower.first_name }}" required>
+            <br>
+            <label>Middle Name:</label>
+            <input type="text" name="middle_name" value="{{ borrower.middle_name }}">
+            <br>
+            <label>LED Quantity:</label>
+            <input type="number" name="led_qty" value="{{ borrower.led_qty }}" required>
+            <br>
+            <label>Monitor Quantity:</label>
+            <input type="number" name="monitor_qty" value="{{ borrower.monitor_qty }}" required>
+            <br>
+            <label>Keyboard Quantity:</label>
+            <input type="number" name="keyboard_qty" value="{{ borrower.keyboard_qty }}" required>
+            <br>
+            <label>Mouse Quantity:</label>
+            <input type="number" name="mouse_qty" value="{{ borrower.mouse_qty }}" required>
+            <br>
+            <label>CPU Quantity:</label>
+            <input type="number" name="cpu_qty" value="{{ borrower.cpu_qty }}" required>
+            <br>
+            <label>UPS Quantity:</label>
+            <input type="number" name="ups_qty" value="{{ borrower.ups_qty }}" required>
+            <br>
+            <label>Sub Cord Quantity:</label>
+            <input type="number" name="sub_cord_qty" value="{{ borrower.sub_cord_qty }}" required>
+            <br>
+            <button type="submit">Save</button>
+            <button type="submit">Cancel</button>
+        </form>
+    </div>
+{% endblock %}

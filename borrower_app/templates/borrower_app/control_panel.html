@@ -1,23 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load static%}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'borrower_app/css/style.css' %}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ESSU Borrower</title>
-    <link rel="stylesheet" href="{% static 'borrower_app/css/style.css' %}">
+
 </head>
 <body>
-        <nav class="nav-bar">
-            <img class="logo" src="{% static 'borrower_app/images/essu_logo_no_text.png' %}">
-            <h2 class="heading">ESSU Borrower</h2>
-            <a class="nav-hover nav-home active" href="{% url 'home' %}">Home</a>
-            <a class="nav-hover nav-pending active" href="{% url 'pending_items' %}">Pending Items</a>
-            <a class="nav-hover nav-return active" href="{% url 'return_items' %}">Return Items</a>
-        </nav>
-        <hr class="line">
+    <nav class="nav-bar">
+        <img class="logo" src="{% static 'borrower_app/images/essu_logo_no_text.png' %}">
+        <h2 class="heading">ESSU Borrower</h2>
+        <a class="nav-hover nav-home" href="{% url 'home' %}">Home</a>
+        <a class="nav-hover nav-pending" href="{% url 'pending_items' %}">Pending Items</a>
+        <a class="nav-hover nav-return" href="{% url 'return_items' %}">Return Items</a>
+    </nav>
+    <hr class="line">
+
+    <script>
+    const buttons = document.querySelectorAll('.nav-hover');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove active class from all buttons
+            buttons.forEach(btn => btn.classList.remove('nav-active'));
+
+            // Add active class to the clicked button
+            button.classList.add('nav-active');
+        });
+    });
+    </script>
+
     {% block content %}
     {% endblock content %}
-
 </body>
 </html>
+
