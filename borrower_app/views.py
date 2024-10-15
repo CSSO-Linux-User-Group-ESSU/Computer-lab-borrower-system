@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 import django.contrib.messages as messages
 from .models import BorrowerInfo
 from django.contrib.auth import login, authenticate,logout
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.http import HttpResponse
 import subprocess
@@ -97,7 +98,7 @@ def control_panel(request):
 
     return render(request, 'borrower_app/login.html')  # Render the login page for GET requests
 
-
+@login_required
 def home(request):
     return render(request, 'borrower_app/home.html')
 
@@ -177,12 +178,12 @@ def edit_borrower(request, borrower_id):
 
 
 def scan_printer(request):
-    has_printer = subprocess.run('lpstat -p', shell=True, capture_output=True)
-    print(has_printer)
-    if has_printer.returncode == 0:
-        return HttpResponse('Has Printer')
-    else:
+    has_printer = subprocess.check_output('lpstat -p', shell=True)
+    print(has_printer,'has_printer')
+    if b'disabled' in has_printer:
         return HttpResponse('No Printer')
+    else:
+        return HttpResponse('Has Printer')
 
 def scan_paper(request):
     image_path = 'HTR/scannedImages/scanned_form.png'

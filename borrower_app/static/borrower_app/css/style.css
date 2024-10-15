@@ -23,7 +23,7 @@ body{
     border-right: none;
 }
 
-.nav-home, .nav-pending, .nav-return {
+.nav-home, .nav-pending, .nav-return, .nav-logout {
     text-decoration: none;
     color: #333;
     font-weight: bold;
@@ -43,6 +43,10 @@ body{
     margin-left: 30px;
 }
 .nav-return {
+    margin-left: 30px;
+}
+
+.nav-logout {
     margin-left: 30px;
 }
 
