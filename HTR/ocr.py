@@ -95,7 +95,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Path to the image
-    image_path = 'HTR/scannedImages/forms.jpg' or args.image_path
+    image_path =  args.image_path or 'HTR/scannedImages/forms.jpg'
     crop_path = f'HTR/croppedImages/Borrow-{date}.jpg'
 
     # Preprocess the image
@@ -117,5 +117,7 @@ if __name__ == "__main__":
         print(date)
         print("Extracted Text:")
         print(extracted_text)
+        with open('HTR/data/data.txt','wt') as f:
+            f.write(extracted_text)
     else:
         print("Failed to preprocess the image.")
