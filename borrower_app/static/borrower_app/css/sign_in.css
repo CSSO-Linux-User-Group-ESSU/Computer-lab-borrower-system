@@ -78,7 +78,7 @@ body {
 }
 
 
-.login-btn {
+.login-btn, .cancel-btn{
     margin-bottom: 20px;
     width: 100%;
     padding: 12px;
@@ -92,7 +92,13 @@ body {
     transition: background-color 0.3s ease;
 }
 
+
+
 .login-btn:hover {
+    background-color: #0c6d3f;
+}
+
+.cancel-btn:hover {
     background-color: #0c6d3f;
 }
 

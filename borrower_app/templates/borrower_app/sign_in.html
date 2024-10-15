@@ -24,7 +24,14 @@
                         <input type="password" class="input-field" placeholder="Password" id="password" name="password">
                         <input type="password" class="input-field" placeholder="Confirm Password" id="confirm_password" name="confirm_password">
                     <div class="input-group">
+                    <form action="{% url 'login' %}" method="POST">
+                        {% csrf_token %}
                         <button class="login-btn" type="submit">Sign In</button>
+                        </form>
+                    <form action="{% url 'login' %}" method="POST">
+                        {% csrf_token %}
+                        <button class="cancel-btn" type="submit">Cancel</button>
+
                     </div>
                 </div>
                 <div class="right-box">
@@ -35,6 +42,6 @@
                 </div>
             </div>
         </div>
-    </form>
+
 </body>
 </html>

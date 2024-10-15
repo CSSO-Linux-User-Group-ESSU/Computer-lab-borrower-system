@@ -45,7 +45,6 @@ body{
 .nav-return {
     margin-left: 30px;
 }
-
 .nav-logout {
     margin-left: 30px;
 }
@@ -125,8 +124,6 @@ body{
     background-color: white;
     height: 370px;
     width: 350px;
-    align-items: center;
-    align-content: center;
     margin-left:64.5%;
     border-style: solid;
     border-width: 2px;
@@ -155,6 +152,17 @@ body{
     padding: 10px 30px;
     border-radius: 5px;
 }
+
+.scan-info{
+    margin-top: 170px;
+    margin-left: 110px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+
+
+
 
 
 /* CSS for Pending Items */
@@ -185,6 +193,22 @@ body{
     margin-top: 1%;
     margin-left:75%;
 }
+
+
+.modify-btn-pending:disabled {
+    background-color: #d3d3d3;
+    color: #888;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+.delete-btn-pending:disabled {
+    background-color: #d3d3d3;
+    color: #888;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+
 
 
 table.borrowers {
