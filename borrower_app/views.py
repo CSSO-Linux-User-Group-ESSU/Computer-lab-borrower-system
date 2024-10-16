@@ -188,7 +188,7 @@ def scan_printer(request):
 def scan_paper(request):
     image_path = 'HTR/scannedImages/scanned_form.png'
     with open(image_path, 'wb') as f:
-        is_scan = subprocess.run('scanimage --format=png --mode Color --resolution 300', stdout=f, shell=True)
+        is_scan = subprocess.run('scanimage --format=png --mode Color --resolution 600 --brightness 50 --contrast 50', stdout=f, shell=True)
         if is_scan.returncode == 0:
 
             # Cropping the scanned image

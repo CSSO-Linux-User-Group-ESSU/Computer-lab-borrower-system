@@ -25,7 +25,7 @@ def preprocess_image(image_path, crop_path):
         hsv = cv2.cvtColor(cropped, cv2.COLOR_BGR2HSV)
 
         # Define the range for blue color in HSV
-        lower_blue = np.array([90, 50, 50])  # Lower bound of blue
+        lower_blue = np.array([90, 50, 100])  # Lower bound of blue
         upper_blue = np.array([130, 255, 255])  # Upper bound of blue
 
         # Create a mask to extract only blue ink
@@ -33,6 +33,8 @@ def preprocess_image(image_path, crop_path):
 
         # The extracted blue ink
         blue_img = cv2.bitwise_and(cropped,cropped,mask=mask)
+
+        cv2.imwrite('Blue.png', blue_img)
 
         # Convert the extracted image to grayscale
         gray = cv2.cvtColor(blue_img, cv2.COLOR_BGR2GRAY)
@@ -48,7 +50,7 @@ def preprocess_image(image_path, crop_path):
 
         # Morphological transformation to clean the image
         kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 1))
-        cleaned_img = cv2.morphologyEx(binary_img, cv2.MORPH_CROSS, kernel)
+        cleaned_img = cv2.morphologyEx(binary_img, cv2.MORPH_OPEN, kernel)
 
         return cleaned_img
     except Exception as e:
@@ -95,7 +97,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Path to the image
-    image_path =  args.image_path or 'HTR/scannedImages/forms.jpg'
+    image_path =  args.image_path or 'HTR/scannedImages/scanned_form.png'
     crop_path = f'HTR/croppedImages/Borrow-{date}.jpg'
 
     # Preprocess the image
