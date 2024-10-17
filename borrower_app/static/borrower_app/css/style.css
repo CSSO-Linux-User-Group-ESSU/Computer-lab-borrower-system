@@ -36,17 +36,21 @@ body{
 }
 
 .nav-home {
-    margin-left: 30%;
+    margin-left: 36%;
+    margin-top: 30px;
 }
 
 .nav-pending {
     margin-left: 30px;
+    margin-top: 30px;
 }
 .nav-return {
     margin-left: 30px;
+    margin-top: 30px;
 }
 .nav-logout {
     margin-left: 30px;
+    margin-top: 30px;
 }
 
 .nav-hover:hover {
@@ -169,12 +173,12 @@ body{
 .pend-heading {
     margin-left: 20px;
     margin-right: 0px;
-    margin-top: 10px;
+    margin-top: 5px;
     margin-bottom: 0px;
     position: fixed;
 }
 
-.modify-btn-pending, .delete-btn-pending {
+.modify-btn-pending, .delete-btn-pending, .return-btn-pending {
     color: black;
     font-weight: bold;
     font-size: 16px;
@@ -185,13 +189,18 @@ body{
 }
 
 .modify-btn-pending {
-    margin-top: 1%;
-    margin-left: 60%;
+    margin-top: 10px;
+    margin-left: 35%;
 }
 
 .delete-btn-pending {
-    margin-top: 1%;
-    margin-left:75%;
+    margin-top: 10px;
+    margin-left:50%;
+}
+
+.return-btn-pending {
+    margin-top: 10px;
+    margin-left:21%;
 }
 
 
@@ -208,12 +217,68 @@ body{
     opacity: 0.6;
 }
 
+.return-btn-pending:disabled {
+    background-color: #d3d3d3;
+    color: #888;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+
+.search-borrower {
+    width: 200px;
+    padding: 10px 15px;
+    margin-top: 9px;
+    margin-left: 74%;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+    outline: none;
+    transition: all 0.3s ease;
+    position: fixed;
+}
+
+
+.search-borrower:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
+}
+
+.search-borrower::placeholder {
+    color: #888;
+    font-style: italic;
+}
+
+
+/* Style for the search button */
+.search-btn {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    border: none;
+    margin-left: 90%;
+    margin-top: 11px;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: fixed;
+}
+
+/* Hover effect */
+.search-btn:hover {
+    background-color: #45a049; /* Slightly darker green */
+}
+
+
+
+
+
 
 
 
 table.borrowers {
     width: 100%;
-
     border-collapse: collapse;
     font-family: Arial, sans-serif;
     margin: 5% 0px;
@@ -322,9 +387,3 @@ table.borrowers tr:hover {
     margin-top: 10px;
     margin-right: 10px;
 }
-
-
-
-
-
-
