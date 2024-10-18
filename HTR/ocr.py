@@ -25,28 +25,31 @@ def preprocess_image(image_path, crop_path):
         hsv = cv2.cvtColor(cropped, cv2.COLOR_BGR2HSV)
 
         # Define the range for blue color in HSV
-        lower_blue = np.array([90, 50, 100])  # Lower bound of blue
+        lower_blue = np.array([90, 50, 50])  # Lower bound of blue
         upper_blue = np.array([130, 255, 255])  # Upper bound of blue
 
         # Create a mask to extract only blue ink
         mask = cv2.inRange(hsv, lower_blue, upper_blue)
 
+        # Apply edge detection to avoid masking near text edges
+        edges = cv2.Canny(cropped, 100, 200)
+
+        # Refine the mask by excluding edges (so text edges aren't altered)
+        refined_mask = cv2.bitwise_and(mask, cv2.bitwise_not(edges))
+
         # The extracted blue ink
-        blue_img = cv2.bitwise_and(cropped,cropped,mask=mask)
+        blue_img = cv2.bitwise_and(cropped, cropped, mask=refined_mask)
 
         cv2.imwrite('Blue.png', blue_img)
 
         # Convert the extracted image to grayscale
         gray = cv2.cvtColor(blue_img, cv2.COLOR_BGR2GRAY)
 
-
         # Denoise the image using Gaussian Blur
         denoised = cv2.GaussianBlur(gray, (1, 1), 0)
 
-
         # Apply binary thresholding (Binarization)
-        _, binary_img = cv2.threshold(denoised, 0, 255, cv2.THRESH_BINARY)
-
+        _, binary_img = cv2.threshold(denoised, 50, 255, cv2.THRESH_BINARY)
 
         # Morphological transformation to clean the image
         kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 1))

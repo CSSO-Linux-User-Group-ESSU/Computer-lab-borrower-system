@@ -178,17 +178,17 @@ def edit_borrower(request, borrower_id):
 
 
 def scan_printer(request):
-    has_printer = subprocess.check_output('lpstat -p', shell=True)
+    has_printer = subprocess.check_output('scanimage -L', shell=True)
     print(has_printer,'has_printer')
-    if b'disabled' in has_printer:
-        return HttpResponse('No Printer')
-    else:
+    if b'device' in has_printer:
         return HttpResponse('Has Printer')
+    else:
+        return HttpResponse('No Printer')
 
 def scan_paper(request):
     image_path = 'HTR/scannedImages/scanned_form.png'
     with open(image_path, 'wb') as f:
-        is_scan = subprocess.run('scanimage --format=png --mode Color --resolution 600 --brightness 50 --contrast 50', stdout=f, shell=True)
+        is_scan = subprocess.run('scanimage --format=png --mode Color --resolution 600', stdout=f, shell=True)
         if is_scan.returncode == 0:
 
             # Cropping the scanned image

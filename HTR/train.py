@@ -63,11 +63,11 @@ run_command(combine_command)
 
 print(f"Training complete! The trained model is saved as {os.path.join(output_dir, model_name)}.traineddata")
 
-save_to_use = f"sudo cp HTR/output/handwriting_model.traineddata /usr/share/tesseract-ocr/5/tessdata/"
-run_command(save_to_use)
+# save_to_use = f"sudo cp HTR/output/handwriting_model.traineddata /usr/share/tesseract-ocr/5/tessdata/"
+# run_command(save_to_use)
 
 
-for filename in os.listdir(output_dir):
-    file_path = os.path.join(output_dir, filename)
-    os.remove(file_path)  # Delete the file
-    print(f"Deleted: {file_path}")  # Print confirmation of deletion
+# for filename in os.listdir(output_dir):
+#     file_path = os.path.join(output_dir, filename)
+#     os.remove(file_path)  # Delete the file
+#     print(f"Deleted: {file_path}")  # Print confirmation of deletion
