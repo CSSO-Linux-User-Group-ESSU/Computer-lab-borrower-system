@@ -13,7 +13,8 @@ import cv2
 
 
 def success_page(request):
-    return render(request,"borrower_app/success_page.html")
+    return render(request, "borrower_app/success_page.html")
+
 
 def upload_and_process_file(request):
     if request.method == 'POST':
@@ -21,18 +22,21 @@ def upload_and_process_file(request):
         file_form = UploadFileForm(request.POST, request.FILES)
 
         if file_form.is_valid():
-            # Get the uploaded file
             uploaded_file = request.FILES['files']
-
-            # Load the Excel workbook using openpyxl
             wb = load_workbook(uploaded_file)
-            sheet = wb.active  # Assuming the data is in the active sheet
+            sheet = wb.active
 
-            # Iterate through the rows of the Excel sheet (assuming first row is headers)
-            for row in sheet.iter_rows(min_row=2, values_only=True):  # Skipping header row
-                last_name, first_name, middle_name, projector_qty, led_qty, monitor_qty, keyboard_qty, mouse_qty, cpu_qty, ups_qty, sub_cord_qty, power_cord_qty = row
+            for row in sheet.iter_rows(min_row=2, values_only=True):
+                (
+                    last_name, first_name, middle_name, projector_qty,
+                    led_qty, monitor_qty, keyboard_qty, mouse_qty,
+                    cpu_qty, ups_qty, sub_cord_qty, power_cord_qty
+                ) = row
 
-                # Populate the BorrowerForm with the extracted data
+                # Skip rows with missing values
+                if None in row:
+                    continue
+
                 borrower_data = {
                     'last_name': last_name,
                     'first_name': first_name,
@@ -48,24 +52,29 @@ def upload_and_process_file(request):
                     'power_cord_qty': power_cord_qty,
                 }
 
-                # Create a new BorrowerInfo object using the BorrowerForm
                 borrower_form = BorrowerForm(borrower_data)
 
                 if borrower_form.is_valid():
-                    # Save the data into the database
+                    # Save the valid borrower data to the database
                     borrower_form.save()
                 else:
-                    # Handle form errors (if any)
+                    # Print or log form errors for debugging purposes
                     print(f"Form errors for row: {borrower_form.errors}")
 
-            # After processing, redirect to a success page or return a success response
-            return redirect('success_page')  # Replace 'success_page' with your actual URL name
+            messages.success(request, "File processed successfully!")
+            return redirect('success_page')
+        else:
+            messages.error(request, "Invalid file upload. Please try again.")
 
     else:
         file_form = UploadFileForm()
 
     # Render the form for file upload
     return render(request, 'borrower_app/upload_and_process_file.html', {'file_form': file_form})
+
+
+def manual_input(request):
+    return render(request, 'borrower_app/form.html')
 
 
 # Create your views here.
@@ -172,7 +181,7 @@ def edit_borrower(request, borrower_id):
         borrower.ups_qty = request.POST.get('ups_qty')
         borrower.sub_cord_qty = request.POST.get('sub_cord_qty')
         borrower.save()
-        return redirect('pending_items')  # Redirect to the pending items page after saving
+        return redirect('pending_items')
 
     return render(request, 'borrower_app/edit_borrower.html', {'borrower': borrower})
 
@@ -184,6 +193,7 @@ def scan_printer(request):
         return HttpResponse('Has Printer')
     else:
         return HttpResponse('No Printer')
+
 
 def scan_paper(request):
     image_path = 'HTR/scannedImages/scanned_form.png'

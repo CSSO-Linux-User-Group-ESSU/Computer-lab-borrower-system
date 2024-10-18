@@ -10,7 +10,7 @@
             Scan Paper
         </button>
         <br>
-        <form method="POST" action="{% url 'upload_and_process_file' %}">
+        <form method="POST" action="{% url 'manual_input' %}">
             {% csrf_token %}
             <button class="manual-button">Enter Manually</button>
         </form>
@@ -21,8 +21,8 @@
             <p id="scan-status" class="scan-info"></p>
     </div>
 
-    <button class="retry-btn">Retry</button>
-    <button class="next-btn">Next</button>
+<!--    <button class="retry-btn">Retry</button>-->
+<!--    <button class="next-btn">Next</button>-->
 
     <script>
         function ScanPrinter() {
