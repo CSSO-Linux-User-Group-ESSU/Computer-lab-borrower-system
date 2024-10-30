@@ -277,49 +277,92 @@ body{
 
 
 
+/* Table Styling */
+.table-responsive {
+    margin: 10px 0;
+    overflow-y: scroll;
+    max-height: 200px;
+    border: 1px solid #ddd;
+    padding: 0;
+    margin-top: 70px;
+}
+
+
 table.borrowers {
     width: 100%;
     border-collapse: collapse;
     font-family: Arial, sans-serif;
-    margin: 5% 0px;
-    left: 0px;
-    position: fixed;
 }
-
-/* General table styling */
-.table-responsive {
-    margin: 10px 0;
-    overflow-x: auto;
-}
-
 
 /* Header styling */
 table.borrowers th {
     background-color: #4CAF50;
     color: white;
     padding: 10px;
-    text-align: center;
-    font-size: 14px;
-    border-bottom: 2px solid #ddd;
+    text-align: center; /* Center text in header */
+    font-size: 14px; /* Header font size */
+    border-bottom: 2px solid #ddd; /* Bottom border for header */
+    position: sticky; /* Makes header sticky */
+    top: 0; /* Keeps the header at the top during scrolling */
+    z-index: 10; /* Ensure header stays above other content */
 }
 
 /* Body rows styling */
 table.borrowers td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-    font-size: 13px;
-    text-align: center;
+    padding: 10px; /* Padding for body cells */
+    border-bottom: 1px solid #ddd; /* Bottom border for cells */
+    font-size: 13px; /* Body font size */
+    text-align: center; /* Center text in cells */
 }
 
 /* Alternating row colors */
 table.borrowers tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: #f9f9f9; /* Light grey for even rows */
 }
 
 table.borrowers tr:hover {
-    background-color: #f1f1f1;
+    background-color: #f1f1f1; /* Light hover effect */
 }
 
+
+
+/* Table Styling for the second table (table-others) */
+.table-others {
+    margin-top: 20px; /* Space between tables */
+}
+
+.table-others table {
+    width: 100%; /* Full width of container */
+    border-collapse: collapse; /* Collapse borders */
+    font-family: Arial, sans-serif; /* Font styling */
+}
+
+/* Header styling for the second table */
+.table-others th {
+    background-color: #4CAF50; /* Header background color */
+    color: white; /* Text color */
+    padding: 10px; /* Padding for header cells */
+    text-align: center; /* Center text in header */
+    font-size: 14px; /* Header font size */
+    border-bottom: 2px solid #ddd; /* Bottom border for header */
+}
+
+/* Body rows styling for the second table */
+.table-others td {
+    padding: 10px; /* Padding for body cells */
+    border-bottom: 1px solid #ddd; /* Bottom border for cells */
+    font-size: 13px; /* Body font size */
+    text-align: center; /* Center text in cells */
+}
+
+/* Alternating row colors for the second table */
+.table-others tr:nth-child(even) {
+    background-color: #f9f9f9; /* Light grey for even rows */
+}
+
+.table-others tr:hover {
+    background-color: #f1f1f1; /* Light hover effect */
+}
 
 
 

@@ -22,6 +22,7 @@ class BorrowerForm(forms.ModelForm):
             'ups_qty',
             'sub_cord_qty',
             'power_cord_qty',
+            'date'
         ]
 
         labels = {
@@ -37,6 +38,6 @@ class BorrowerForm(forms.ModelForm):
             'ups_qty': 'UPS Quantity',
             'sub_cord_qty': 'Sub Chord Quantity',
             'power_cord_qty': 'Power Chord Quantity',
-
+            'date': 'Date'
         }
 

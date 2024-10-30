@@ -6,71 +6,36 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.http import HttpResponse
 import subprocess
-from .form import UploadFileForm, BorrowerForm
 import json
-from openpyxl import load_workbook
 import cv2
-
-
-def success_page(request):
-    return render(request, "borrower_app/success_page.html")
 
 
 def upload_and_process_file(request):
     if request.method == 'POST':
-        # Handle file upload
-        file_form = UploadFileForm(request.POST, request.FILES)
+        # Retrieve form data
+        data = {
+            'first_name': request.POST['first_name'],
+            'last_name': request.POST['last_name'],
+            'middle_name': request.POST.get('middle_name', ''),
+            'projector_qty': request.POST['projector_qty'],
+            'led_qty': request.POST['led_qty'],
+            'monitor_qty': request.POST['monitor_qty'],
+            'keyboard_qty': request.POST['keyboard_qty'],
+            'mouse_qty': request.POST['mouse_qty'],
+            'cpu_qty': request.POST['cpu_qty'],
+            'ups_qty': request.POST['ups_qty'],
+            'sub_cord_qty': request.POST['sub_cord_qty'],
+            'power_cord_qty': request.POST['power_cord_qty'],
+        }
+        # Save the data to the PendingItem model
+        BorrowerInfo.objects.create(**data)
+        return redirect('pending_items')  # Redirect to pending items page
 
-        if file_form.is_valid():
-            uploaded_file = request.FILES['files']
-            wb = load_workbook(uploaded_file)
-            sheet = wb.active
+    return HttpResponse('Invalid request', status=400)
 
-            for row in sheet.iter_rows(min_row=2, values_only=True):
-                (
-                    last_name, first_name, middle_name, projector_qty,
-                    led_qty, monitor_qty, keyboard_qty, mouse_qty,
-                    cpu_qty, ups_qty, sub_cord_qty, power_cord_qty
-                ) = row
 
-                # Skip rows with missing values
-                if None in row:
-                    continue
-
-                borrower_data = {
-                    'last_name': last_name,
-                    'first_name': first_name,
-                    'middle_name': middle_name,
-                    'projector_qty': projector_qty,
-                    'led_qty': led_qty,
-                    'monitor_qty': monitor_qty,
-                    'keyboard_qty': keyboard_qty,
-                    'mouse_qty': mouse_qty,
-                    'cpu_qty': cpu_qty,
-                    'ups_qty': ups_qty,
-                    'sub_cord_qty': sub_cord_qty,
-                    'power_cord_qty': power_cord_qty,
-                }
-
-                borrower_form = BorrowerForm(borrower_data)
-
-                if borrower_form.is_valid():
-                    # Save the valid borrower data to the database
-                    borrower_form.save()
-                else:
-                    # Print or log form errors for debugging purposes
-                    print(f"Form errors for row: {borrower_form.errors}")
-
-            messages.success(request, "File processed successfully!")
-            return redirect('success_page')
-        else:
-            messages.error(request, "Invalid file upload. Please try again.")
-
-    else:
-        file_form = UploadFileForm()
-
-    # Render the form for file upload
-    return render(request, 'borrower_app/upload_and_process_file.html', {'file_form': file_form})
+def success_page(request):
+    return render(request, "borrower_app/success_page.html")
 
 
 def manual_input(request):

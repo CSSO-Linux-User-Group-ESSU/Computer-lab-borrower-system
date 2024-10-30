@@ -14,7 +14,7 @@ urlpatterns = [
     path('borrower/delete/', views.delete_borrowers, name='delete_borrowers'),
     path('borrower/delete/<int:borrower_id>/', views.delete_borrower, name='delete_borrower'),
     path('borrower/edit/<int:borrower_id>/', views.edit_borrower, name='modify_borrower'),
-    path('upload_and_process_file/', views.upload_and_process_file, name='upload_and_process_file'),
+    path('upload/', views.upload_and_process_file, name='upload_and_process_file'),
     path('success_page/',views.success_page,name='success_page'),
     path('manual_input/', views.manual_input, name='manual_input'),
 ]
