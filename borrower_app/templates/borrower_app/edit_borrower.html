@@ -15,6 +15,9 @@
                 <label>Middle Name:</label>
                 <input type="text" name="middle_name" value="{{ borrower.middle_name }}">
                 <br>
+                <label>Projector Quantity:</label>
+                <input type="number" name="projector_qty" value="{{ borrower.projector_qty }}" required>
+                <br>
                 <label>LED Quantity:</label>
                 <input type="number" name="led_qty" value="{{ borrower.led_qty }}" required>
                 <br>
@@ -35,6 +38,9 @@
                 <br>
                 <label>Sub Cord Quantity:</label>
                 <input type="number" name="sub_cord_qty" value="{{ borrower.sub_cord_qty }}" required>
+                <br>
+                <label>Power Cord Quantity:</label>
+                <input type="number" name="power_cord_qty" value="{{ borrower.power_cord_qty }}" required>
                 <br>
                 <button type="submit" class="save-btn">Save</button>
                 <button type="submit" class="cancel-btn">Cancel</button>
