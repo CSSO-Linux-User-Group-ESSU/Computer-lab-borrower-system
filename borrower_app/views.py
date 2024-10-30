@@ -126,6 +126,7 @@ def pending_items(request):
             'last_name': borrower.last_name,
             'first_name': borrower.first_name,
             'middle_name': borrower.middle_name,
+            'projector_qty': borrower.projector_qty,
             'led_qty': borrower.led_qty,
             'monitor_qty': borrower.monitor_qty,
             'keyboard_qty': borrower.keyboard_qty,
@@ -133,6 +134,7 @@ def pending_items(request):
             'cpu_qty': borrower.cpu_qty,
             'ups_qty': borrower.ups_qty,
             'sub_cord_qty': borrower.sub_cord_qty,
+            'power_cord_qty': borrower.power_cord_qty,
             'total': total,
         })
     return render(request, 'borrower_app/pending_items.html', {'borrowers': borrower_data})

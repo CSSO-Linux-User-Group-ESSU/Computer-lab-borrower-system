@@ -1,50 +1,98 @@
 {% extends "borrower_app/control_panel.html" %}
 
 {% block content %}
-{% load static %}
-      <div class="content">
-            <h1 class="pend-heading">Return items</h1>
-            <div class="table-responsive">
-                  <table class="borrowers">
-                      <thead>
-                          <tr>
-                              <th>Select</th> <!-- Add a header for checkboxes -->
-                              <th>Last Name</th>
-                              <th>First Name</th>
-                              <th>Mid Name</th>
-                              <th>Led</th>
-                              <th>Monitor</th>
-                              <th>Keyboard</th>
-                              <th>Mouse</th>
-                              <th>CPU</th>
-                              <th>UPS</th>
-                              <th>Sub Cord</th>
-                              <th>Total</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          {% for borrower in borrowers %}
-                              <tr>
-                                  <td>
-                                      <input type="checkbox" class="select-borrower" value="{{ borrower.id }}">
-                                  </td>
-                                  <td>{{ borrower.last_name }}</td>
-                                  <td>{{ borrower.first_name }}</td>
-                                  <td>{{ borrower.middle_name }}</td>
-                                  <td>{{ borrower.led_qty }}</td>
-                                  <td>{{ borrower.monitor_qty }}</td>
-                                  <td>{{ borrower.keyboard_qty }}</td>
-                                  <td>{{ borrower.mouse_qty }}</td>
-                                  <td>{{ borrower.cpu_qty }}</td>
-                                  <td>{{ borrower.ups_qty }}</td>
-                                  <td>{{ borrower.sub_cord_qty }}</td>
-                                  <td>{{ borrower.total }}</td>
-                              </tr>
-                          {% endfor %}
-                      </tbody>
-                  </table>
-              </div>
-      </div>
+<div class="content">
+    <h1 class="pend-heading">Returned Items</h1>
 
+    <button id="delete-button" class="delete-btn" disabled>Delete Selected</button>
 
+    <div class="table-responsive">
+        <table class="borrowers" id="returned-table">
+            <thead>
+                <tr>
+                    <th>Select</th>  <!-- Checkbox column -->
+                    <th>Last Name</th>
+                    <th>First Name</th>
+                    <th>Mid Name</th>
+                    <th>Projector</th>
+                    <th>Led</th>
+                    <th>Monitor</th>
+                    <th>Keyboard</th>
+                    <th>Mouse</th>
+                    <th>CPU</th>
+                    <th>UPS</th>
+                    <th>Sub Cord</th>
+                    <th>Power Cord</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    const tableBody = document.querySelector('#returned-table tbody');
+    const deleteButton = document.getElementById('delete-button');
+
+    // Retrieve returned items from localStorage
+    let returnedItems = JSON.parse(localStorage.getItem('returnedItems')) || [];
+
+    // Populate the table with returned items
+    function populateTable() {
+        tableBody.innerHTML = ''; // Clear the table
+
+        returnedItems.forEach((item, index) => {
+            const row = document.createElement('tr');
+
+            // Create checkbox cell
+            const checkboxCell = document.createElement('td');
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.classList.add('select-item');
+            checkbox.value = index;
+            checkboxCell.appendChild(checkbox);
+            row.appendChild(checkboxCell);
+
+            // Create cells for item data
+            item.forEach(cellText => {
+                const cell = document.createElement('td');
+                cell.textContent = cellText;
+                row.appendChild(cell);
+            });
+
+            tableBody.appendChild(row);
+        });
+
+        // Add event listeners to checkboxes for enabling/disabling the delete button
+        addCheckboxListeners();
+    }
+
+    // Enable/disable the "Delete Selected" button based on checkbox selection
+    function addCheckboxListeners() {
+        const checkboxes = document.querySelectorAll('.select-item');
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                const anyChecked = [...checkboxes].some(cb => cb.checked);
+                deleteButton.disabled = !anyChecked;
+            });
+        });
+    }
+
+    // Delete selected items
+    deleteButton.addEventListener('click', () => {
+        const selectedCheckboxes = document.querySelectorAll('.select-item:checked');
+        const selectedIndexes = [...selectedCheckboxes].map(cb => parseInt(cb.value));
+
+        // Filter out the selected items from the returnedItems array
+        returnedItems = returnedItems.filter((_, index) => !selectedIndexes.includes(index));
+
+        // Update localStorage and refresh the table
+        localStorage.setItem('returnedItems', JSON.stringify(returnedItems));
+        populateTable();
+    });
+
+    // Initial population of the table
+    populateTable();
+</script>
 {% endblock content %}

@@ -15,10 +15,11 @@
         <table class="borrowers" id="borrowers-table">
             <thead>
                 <tr>
-                    <th>Select</th>
+                    <th>Select</th>  <!-- Checkbox column -->
                     <th>Last Name</th>
                     <th>First Name</th>
                     <th>Mid Name</th>
+                    <th>Projector</th>
                     <th>Led</th>
                     <th>Monitor</th>
                     <th>Keyboard</th>
@@ -26,6 +27,7 @@
                     <th>CPU</th>
                     <th>UPS</th>
                     <th>Sub Cord</th>
+                    <th>Power Cord</th>
                     <th>Total</th>
                 </tr>
             </thead>
@@ -36,6 +38,7 @@
                     <td>{{ borrower.last_name }}</td>
                     <td>{{ borrower.first_name }}</td>
                     <td>{{ borrower.middle_name }}</td>
+                    <td>{{ borrower.projector_qty }}</td>
                     <td>{{ borrower.led_qty }}</td>
                     <td>{{ borrower.monitor_qty }}</td>
                     <td>{{ borrower.keyboard_qty }}</td>
@@ -43,6 +46,7 @@
                     <td>{{ borrower.cpu_qty }}</td>
                     <td>{{ borrower.ups_qty }}</td>
                     <td>{{ borrower.sub_cord_qty }}</td>
+                    <td>{{ borrower.power_cord_qty }}</td>
                     <td>{{ borrower.total }}</td>
                 </tr>
                 {% endfor %}
