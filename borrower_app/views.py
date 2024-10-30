@@ -136,6 +136,7 @@ def pending_items(request):
             'sub_cord_qty': borrower.sub_cord_qty,
             'power_cord_qty': borrower.power_cord_qty,
             'total': total,
+            # add date
         })
     return render(request, 'borrower_app/pending_items.html', {'borrowers': borrower_data})
 
@@ -175,6 +176,7 @@ def edit_borrower(request, borrower_id):
         borrower.last_name = request.POST.get('last_name')
         borrower.first_name = request.POST.get('first_name')
         borrower.middle_name = request.POST.get('middle_name')
+        borrower.projector_qty = request.POST.get('projector_qty')
         borrower.led_qty = request.POST.get('led_qty')
         borrower.monitor_qty = request.POST.get('monitor_qty')
         borrower.keyboard_qty = request.POST.get('keyboard_qty')
@@ -182,6 +184,7 @@ def edit_borrower(request, borrower_id):
         borrower.cpu_qty = request.POST.get('cpu_qty')
         borrower.ups_qty = request.POST.get('ups_qty')
         borrower.sub_cord_qty = request.POST.get('sub_cord_qty')
+        borrower.power_cord_qty = request.POST.get('power_cord_qty')
         borrower.save()
         return redirect('pending_items')
 
