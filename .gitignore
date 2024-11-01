@@ -23,6 +23,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 db.sqlite3
+*sqlite3
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
