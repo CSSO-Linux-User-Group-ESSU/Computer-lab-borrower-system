@@ -46,6 +46,9 @@ for filename in os.listdir(scanned_images_dir):
         print(f"Converting {filename} to .tif format...")
         run_command(tif_command)
 
+if input("Please examine the box files\nIf you're done type D: ").upper()!= 'D':
+    quit()
+
 # Generate LSTMF files using the box files generated earlier
 for filename in os.listdir(scanned_images_dir):
     if filename.endswith(('.tif', '.png', '.jpg')):
@@ -63,11 +66,11 @@ run_command(combine_command)
 
 print(f"Training complete! The trained model is saved as {os.path.join(output_dir, model_name)}.traineddata")
 
-save_to_use = f"sudo cp HTR/output/handwriting_model.traineddata /usr/share/tesseract-ocr/5/tessdata/"
-run_command(save_to_use)
+# save_to_use = f"sudo cp HTR/output/handwriting_model.traineddata /usr/share/tesseract-ocr/5/tessdata/"
+# run_command(save_to_use)
 
 
-for filename in os.listdir(output_dir):
-    file_path = os.path.join(output_dir, filename)
-    os.remove(file_path)  # Delete the file
-    print(f"Deleted: {file_path}")  # Print confirmation of deletion
+# for filename in os.listdir(output_dir):
+#     file_path = os.path.join(output_dir, filename)
+#     os.remove(file_path)  # Delete the file
+#     print(f"Deleted: {file_path}")  # Print confirmation of deletion
