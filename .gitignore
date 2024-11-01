@@ -4,33 +4,35 @@
 .DS_Store
 .AppleDouble
 .LSOverride
-
+db.sqlite3
 # Icon must end with two \r
 Icon
-
+db.sqlite3
 
 # Thumbnails
 ._*
-
+db.sqlite3
 # Files that might appear on external disk
 .Spotlight-V100
 .Trashes
-
+db.sqlite3
 # Directories potentially created on remote AFP share
 .AppleDB
 .AppleDesktop
 Network Trash Folder
 Temporary Items
 .apdisk
-
+db.sqlite3
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+db.sqlite3
 
 # C extensions
 *.so
+db.sqlite3
 
 # Distribution / packaging
 .Python
@@ -48,18 +50,22 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+db.sqlite3
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
+db.sqlite3
 
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
+db.sqlite3
 
 # Unit test / coverage reports
+db.sqlite3
 htmlcov/
 .tox/
 .coverage
@@ -68,17 +74,21 @@ nosetests.xml
 coverage.xml
 
 # Translations
+db.sqlite3
 *.mo
 *.pot
 
 # Sphinx documentation
+db.sqlite3
 docs/_build/
 
 # PyBuilder
+db.sqlite3
 target/
 
 
 ### Django ###
+db.sqlite3
 *.log
 *.pot
 *.pyc
