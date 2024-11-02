@@ -59,10 +59,14 @@ for filename in os.listdir(scanned_images_dir):
         print(f"Generating LSTMF file for {filename}...")
         run_command(lstmf_command)
 
-# Combine files into the final .traineddata model
-combine_command = f"combine_tessdata -o {os.path.join(output_dir, model_name)}.traineddata {output_dir}/{model_name}.*"
-print("Combining the trained data into final model...")
-run_command(combine_command)
+
+for filename in os.listdir(output_dir):
+    if filename.endswith((".box", ".lstmf", ".tif")):
+        base_name = os.path.splitext(filename)[0]
+        # Combine files into the final .traineddata model
+        combine_command = f"combine_tessdata -o {os.path.join(output_dir, model_name)}.traineddata {output_dir}/{base_name}.*"
+        print("Combining the trained data into final model...")
+        run_command(combine_command)
 
 print(f"Training complete! The trained model is saved as {os.path.join(output_dir, model_name)}.traineddata")
 
