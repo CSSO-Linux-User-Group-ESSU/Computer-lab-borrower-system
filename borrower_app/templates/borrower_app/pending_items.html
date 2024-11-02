@@ -2,8 +2,6 @@
 
 {% block content %}
     <h1 class="pend-heading">Pending Items</h1>
-
-    <!-- Buttons positioned above the table -->
     <div class="button-container">
         <button id="return-button" class="return-btn-pending" disabled>Item Returned</button>
         <button id="modify-button" class="modify-btn-pending" disabled>Modify Selected</button>
@@ -19,57 +17,26 @@
                     <th>Last Name</th>
                     <th>First Name</th>
                     <th>Mid Name</th>
-                    <th>Projector</th>
-                    <th>Led</th>
-                    <th>Monitor</th>
-                    <th>Keyboard</th>
-                    <th>Mouse</th>
-                    <th>CPU</th>
-                    <th>UPS</th>
-                    <th>Sub Cord</th>
-                    <th>Power Cord</th>
-                    <th>Total</th>
+                    <th>Item Name</th>
+                    <th>Quantity</th>
                     <th>Date Borrowed</th>
                 </tr>
             </thead>
             <tbody>
                 {% for borrower in borrowers %}
-                <tr>
-                    <td><input type="checkbox" class="select-borrower" value="{{ borrower.id }}"></td>
-                    <td>{{ borrower.last_name }}</td>
-                    <td>{{ borrower.first_name }}</td>
-                    <td>{{ borrower.middle_name }}</td>
-                    <td>{{ borrower.projector_qty }}</td>
-                    <td>{{ borrower.led_qty }}</td>
-                    <td>{{ borrower.monitor_qty }}</td>
-                    <td>{{ borrower.keyboard_qty }}</td>
-                    <td>{{ borrower.mouse_qty }}</td>
-                    <td>{{ borrower.cpu_qty }}</td>
-                    <td>{{ borrower.ups_qty }}</td>
-                    <td>{{ borrower.sub_cord_qty }}</td>
-                    <td>{{ borrower.power_cord_qty }}</td>
-                    <td>{{ borrower.total }}</td>
-                    <td>{{ borrower.date_borrowed }}</td>
-                </tr>
+                    <tr>
+                        <td><input type="checkbox" class="select-borrower" value="{{ borrower.id }}"></td>
+                        <td>{{ borrower.last_name }}</td>
+                        <td>{{ borrower.first_name }}</td>
+                        <td>{{ borrower.middle_name }}</td>
+                        <td>{{ borrower.item_name }}</td>
+                        <td>{{ borrower.item_quantity }}</td>
+                        <td>{{ borrower.date_borrowed|date:"Y-m-d" }}</td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
-    <div class="table-others">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Select</th>
-                        <th>Last Name</th>
-                        <th>First Name</th>
-                        <th>Mid Name</th>
-                        <th>Name of Items</th>
-                        <th>Item Quantity</th>
-                        <th>Date Borrowed</th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
 
 
 
@@ -90,14 +57,14 @@
         });
     });
 
-    // Handle modify button click
     modifyButton.addEventListener('click', () => {
-        const selectedIds = [...checkboxes].filter(cb => cb.checked).map(cb => cb.value);
-        if (selectedIds.length === 1) {
-            window.location.href = "{% url 'modify_borrower' 0 %}".replace("0", selectedIds[0]);
-        } else {
-            alert("Please select exactly one borrower to modify.");
-        }
+    const selectedIds = [...checkboxes].filter(cb => cb.checked).map(cb => cb.value);
+    if (selectedIds.length === 1) {
+        const modifyUrl = "{% url 'modify_borrower' 0 %}".replace("0", selectedIds[0]);
+        window.location.href = modifyUrl;
+    } else {
+        alert("Please select exactly one borrower to modify.");
+    }
     });
 
     // Handle delete button click

@@ -1,37 +1,35 @@
 from django.shortcuts import render, redirect, get_object_or_404
 import django.contrib.messages as messages
 from .models import BorrowerInfo
-from django.contrib.auth import login, authenticate,logout
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.http import HttpResponse
 import subprocess
 import json
 import cv2
+from .form import BorrowerForm
+from datetime import date
 
 
 def upload_and_process_file(request):
     if request.method == 'POST':
-        # Retrieve form data
-        data = {
-            'first_name': request.POST['first_name'],
-            'last_name': request.POST['last_name'],
-            'middle_name': request.POST.get('middle_name', ''),
-            'projector_qty': request.POST['projector_qty'],
-            'led_qty': request.POST['led_qty'],
-            'monitor_qty': request.POST['monitor_qty'],
-            'keyboard_qty': request.POST['keyboard_qty'],
-            'mouse_qty': request.POST['mouse_qty'],
-            'cpu_qty': request.POST['cpu_qty'],
-            'ups_qty': request.POST['ups_qty'],
-            'sub_cord_qty': request.POST['sub_cord_qty'],
-            'power_cord_qty': request.POST['power_cord_qty'],
-        }
-        # Save the data to the PendingItem model
-        BorrowerInfo.objects.create(**data)
-        return redirect('pending_items')  # Redirect to pending items page
+        form = BorrowerForm(request.POST)
 
-    return HttpResponse('Invalid request', status=400)
+        if form.is_valid():
+            borrower = form.save(commit=False)
+            if not borrower.date_borrowed:
+                borrower.date_borrowed = date.today()
+            borrower.save()
+            messages.success(request, "Borrower saved successfully.")
+            return redirect('success_page')
+        else:
+            messages.error(request, "Please correct the errors below.")
+            return render(request, 'borrower_app/form.html', {'form': form})
+
+    # Provide an empty form if GET request
+    form = BorrowerForm()
+    return render(request, 'borrower_app/form.html', {'form': form})
 
 
 def success_page(request):
@@ -49,6 +47,7 @@ def logins(request):
 
 def sign_in(request):
     return render(request, 'borrower_app/sign_in.html')
+
 
 def log_out(request):
     logout(request)
@@ -72,6 +71,7 @@ def control_panel(request):
 
     return render(request, 'borrower_app/login.html')  # Render the login page for GET requests
 
+
 @login_required
 def home(request):
     return render(request, 'borrower_app/home.html')
@@ -83,28 +83,7 @@ def return_items(request):
 
 def pending_items(request):
     borrowers = BorrowerInfo.objects.all()
-    borrower_data = []
-    for borrower in borrowers:
-        total = borrower.total_quantity()
-        borrower_data.append({
-            'id': borrower.id,  # Ensure borrower.id is passed here
-            'last_name': borrower.last_name,
-            'first_name': borrower.first_name,
-            'middle_name': borrower.middle_name,
-            'projector_qty': borrower.projector_qty,
-            'led_qty': borrower.led_qty,
-            'monitor_qty': borrower.monitor_qty,
-            'keyboard_qty': borrower.keyboard_qty,
-            'mouse_qty': borrower.mouse_qty,
-            'cpu_qty': borrower.cpu_qty,
-            'ups_qty': borrower.ups_qty,
-            'sub_cord_qty': borrower.sub_cord_qty,
-            'power_cord_qty': borrower.power_cord_qty,
-            'total': total,
-            # add date
-        })
-    return render(request, 'borrower_app/pending_items.html', {'borrowers': borrower_data})
-
+    return render(request, 'borrower_app/pending_items.html', {'borrowers': borrowers})
 
 
 def delete_borrower(request, borrower_id):
@@ -118,10 +97,8 @@ def delete_borrower(request, borrower_id):
     return render(request, 'borrower_app/confirm_delete.html', {'borrower': borrower})
 
 
-
 def delete_borrowers(request):
     if request.method == "POST":
-
         data = json.loads(request.body)
         borrower_ids = data.get('borrower_ids', [])
 
@@ -135,30 +112,20 @@ def delete_borrowers(request):
 
 def edit_borrower(request, borrower_id):
     borrower = get_object_or_404(BorrowerInfo, id=borrower_id)
-
-    if request.method == "POST":
-        # Update borrower fields with data from the form
-        borrower.last_name = request.POST.get('last_name')
-        borrower.first_name = request.POST.get('first_name')
-        borrower.middle_name = request.POST.get('middle_name')
-        borrower.projector_qty = request.POST.get('projector_qty')
-        borrower.led_qty = request.POST.get('led_qty')
-        borrower.monitor_qty = request.POST.get('monitor_qty')
-        borrower.keyboard_qty = request.POST.get('keyboard_qty')
-        borrower.mouse_qty = request.POST.get('mouse_qty')
-        borrower.cpu_qty = request.POST.get('cpu_qty')
-        borrower.ups_qty = request.POST.get('ups_qty')
-        borrower.sub_cord_qty = request.POST.get('sub_cord_qty')
-        borrower.power_cord_qty = request.POST.get('power_cord_qty')
+    if request.method == 'POST':
+        borrower.last_name = request.POST.get('last_name', borrower.last_name)
+        borrower.first_name = request.POST.get('first_name', borrower.first_name)
+        borrower.middle_name = request.POST.get('middle_name', borrower.middle_name)
+        borrower.item_name = request.POST.get('item_name', borrower.item_name)
+        borrower.item_quantity = request.POST.get('item_quantity', borrower.item_quantity)
         borrower.save()
         return redirect('pending_items')
-
     return render(request, 'borrower_app/edit_borrower.html', {'borrower': borrower})
 
 
 def scan_printer(request):
     has_printer = subprocess.check_output('lpstat -p', shell=True)
-    print(has_printer,'has_printer')
+    print(has_printer, 'has_printer')
     if b'disabled' in has_printer:
         return HttpResponse('No Printer')
     else:
@@ -168,15 +135,16 @@ def scan_printer(request):
 def scan_paper(request):
     image_path = 'HTR/scannedImages/scanned_form.png'
     with open(image_path, 'wb') as f:
-        is_scan = subprocess.run('scanimage --format=png --mode Color --resolution 600 --brightness 50 --contrast 50', stdout=f, shell=True)
+        is_scan = subprocess.run('scanimage --format=png --mode Color --resolution 600 --brightness 50 --contrast 50',
+                                 stdout=f, shell=True)
         if is_scan.returncode == 0:
 
             # Cropping the scanned image
             image = cv2.imread(image_path)
             h, w, _ = image.shape
-            image = image[:,:w//2]
+            image = image[:, :w // 2]
             cv2.imwrite(image_path, image)
-            
+
             # Doing now the actual scanning
             scan = subprocess.run(f'python3 HTR/ocr.py {image_path}', shell=True)
             if scan.returncode == 0:

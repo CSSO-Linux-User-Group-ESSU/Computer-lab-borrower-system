@@ -92,13 +92,13 @@ body{
 /* CSS for Home */
 .home-container {
     width: 56%;
-    height: 510px;
+    height: 100%;
     background-color: #f8f8f8;
     border: None;
-    top: 72px;
+    top: 71.7px;
     left: 0;
     position: fixed;
-    align-content: center;
+    padding-top: 7.8%;
 
 }
 
@@ -124,6 +124,7 @@ body{
 .manual-button:active {
     background-color: #96c693;
 }
+
 .pic-container{
     background-color: white;
     height: 370px;
@@ -134,28 +135,6 @@ body{
     margin-top: 1%
 }
 
-.retry-btn{
-    margin-left:70%;
-    margin-top: 1%;
-    position: fixed;
-    background-color: #f8f8f8;
-    border-color: #ff9292;
-    border-style: solid;
-    border-width: 1px;
-    padding: 10px 30px;
-    border-radius: 5px;
-
-}
-
-.next-btn{
-    margin-left: 79.1%;
-    margin-top: 1%;
-    position: fixed;
-    background-color: #d1edcf;
-    border: none;
-    padding: 10px 30px;
-    border-radius: 5px;
-}
 
 .scan-info{
     margin-top: 170px;
@@ -420,13 +399,33 @@ table.borrowers tr:hover {
 
 /* Button styling */
 .save-btn, .cancel-btn {
-    padding: 10px 15px;
     font-size: 16px;
     color: #fff;
     background-color: #007bff;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
     margin-right: 10px;
+    text-align: center;
+    text-decoration: none;
 }
+.save-btn{
+    padding: 15px 20px;
+}
+
+.cancel-btn{
+    padding: 12px 18px;
+}
+
+.error-text, .error-message {
+        color: red;
+        font-size: 0.9em;
+        margin-top: 4px;
+    }
+    .hidden {
+        display: none;
+    }
+    .visible {
+        display: block;
+    }

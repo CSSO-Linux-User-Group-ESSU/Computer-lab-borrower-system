@@ -1,6 +1,114 @@
 {% extends "borrower_app/control_panel.html" %}
 
 {% block content %}
+<form method="POST" action="{% url 'upload_and_process_file' %}">
+    {% csrf_token %}
+    <h1 class="form-header">FORM</h1>
+
+    <!-- Display form-wide (non-field) errors if they exist -->
+    {% if form.non_field_errors %}
+        <p class="error-message visible">{{ form.non_field_errors.0 }}</p>
+    {% endif %}
+
+    <div class="data-container">
+        <label>Last Name:</label>
+        <input type="text" name="last_name" value="{{ form.last_name.value|default:'' }}" oninput="capitalizeFirstLetter(this)">
+        <p class="error-text {% if form.last_name.errors %}visible{% else %}hidden{% endif %}">{{ form.last_name.errors.0 }}</p>
+        <br>
+
+        <label>First Name:</label>
+        <input type="text" name="first_name" value="{{ form.first_name.value|default:'' }}" oninput="capitalizeFirstLetter(this)">
+        <p class="error-text {% if form.first_name.errors %}visible{% else %}hidden{% endif %}">{{ form.first_name.errors.0 }}</p>
+        <br>
+
+        <label>Middle Name:</label>
+        <input type="text" name="middle_name" value="{{ form.middle_name.value|default:'' }}" oninput="capitalizeFirstLetter(this)">
+        <p class="error-text {% if form.middle_name.errors %}visible{% else %}hidden{% endif %}">{{ form.middle_name.errors.0 }}</p>
+        <br>
+
+        <label>Item Name:</label>
+        <input type="text" name="item_name" value="{{ form.item_name.value|default:'' }}" oninput="capitalizeFirstLetter(this)">
+        <p class="error-text {% if form.item_name.errors %}visible{% else %}hidden{% endif %}">{{ form.item_name.errors.0 }}</p>
+        <br>
+
+        <label>Item Quantity:</label>
+        <input type="number" name="item_quantity" value="{{ form.item_quantity.value|default:'' }}">
+        <p class="error-text {% if form.item_quantity.errors %}visible{% else %}hidden{% endif %}">{{ form.item_quantity.errors.0 }}</p>
+        <br>
+
+        <button type="submit" class="save-btn">Save</button>
+        <a href="{% url 'home' %}" class="cancel-btn">Cancel</a>
+    </div>
+</form>
+{% extends "borrower_app/control_panel.html" %}
+
+{% block content %}
+<form method="POST" action="{% url 'upload_and_process_file' %}">
+    {% csrf_token %}
+    <h1 class="form-header">FORM</h1>
+
+    <!-- Display form-wide (non-field) errors if they exist -->
+    {% if form.non_field_errors %}
+        <p class="error-message visible">{{ form.non_field_errors.0 }}</p>
+    {% endif %}
+
+    <div class="data-container">
+        <label>Last Name:</label>
+        <input type="text" name="last_name" value="{{ form.last_name.value|default:'' }}" oninput="capitalizeFirstLetter(this)">
+        <p class="error-text {% if form.last_name.errors %}visible{% else %}hidden{% endif %}">{{ form.last_name.errors.0 }}</p>
+        <br>
+
+        <label>First Name:</label>
+        <input type="text" name="first_name" value="{{ form.first_name.value|default:'' }}" oninput="capitalizeFirstLetter(this)">
+        <p class="error-text {% if form.first_name.errors %}visible{% else %}hidden{% endif %}">{{ form.first_name.errors.0 }}</p>
+        <br>
+
+        <label>Middle Name:</label>
+        <input type="text" name="middle_name" value="{{ form.middle_name.value|default:'' }}" oninput="capitalizeFirstLetter(this)">
+        <p class="error-text {% if form.middle_name.errors %}visible{% else %}hidden{% endif %}">{{ form.middle_name.errors.0 }}</p>
+        <br>
+
+        <label>Item Name:</label>
+        <input type="text" name="item_name" value="{{ form.item_name.value|default:'' }}" oninput="capitalizeFirstLetter(this)">
+        <p class="error-text {% if form.item_name.errors %}visible{% else %}hidden{% endif %}">{{ form.item_name.errors.0 }}</p>
+        <br>
+
+        <label>Item Quantity:</label>
+        <input type="number" name="item_quantity" value="{{ form.item_quantity.value|default:'' }}">
+        <p class="error-text {% if form.item_quantity.errors %}visible{% else %}hidden{% endif %}">{{ form.item_quantity.errors.0 }}</p>
+        <br>
+
+        <button type="submit" class="save-btn">Save</button>
+        <a href="{% url 'home' %}" class="cancel-btn">Cancel</a>
+    </div>
+</form>
+
+<script>
+    function capitalizeFirstLetter(input) {
+        const value = input.value;
+        if (value) {
+            input.value = value.charAt(0).toUpperCase() + value.slice(1);
+        }
+    }
+</script>
+
+
+{% endblock content %}
+
+<script>
+    function capitalizeFirstLetter(input) {
+        const value = input.value;
+        if (value) {
+            input.value = value.charAt(0).toUpperCase() + value.slice(1);
+        }
+    }
+</script>
+
+
+{% endblock content %}
+{% extends "borrower_app/control_panel.html" %}
+
+{% block content %}
     <form method="POST" action="{% url 'upload_and_process_file' %}">
         {% csrf_token %}
         <h1 class="form-header">FORM</h1>
