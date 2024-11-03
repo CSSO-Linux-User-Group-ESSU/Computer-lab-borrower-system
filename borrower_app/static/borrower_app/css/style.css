@@ -429,3 +429,42 @@ table.borrowers tr:hover {
     .visible {
         display: block;
     }
+
+/* CSS for Success Page */
+
+.success_container{
+    margin: 100px 300px;
+    padding: 70px 50px;
+    background: #41ab5d;
+    border-radius: 20px;
+    align-items: center;
+
+}
+.success_text{
+    margin-left: 20%;
+    margin-top: 1px;
+    font-size: 35px;
+    color: white;
+    font-weight: bold;
+}
+
+.add-another-btn, .done-btn{
+    font-size: 16px;
+    font-weight: 100;
+    background-color: #005a32;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.add-another-btn{
+    margin-left: 100px;
+    padding: 14px 30px;
+}
+
+.done-btn{
+    margin-left: 40px;
+    padding: 14px 60px;
+}
