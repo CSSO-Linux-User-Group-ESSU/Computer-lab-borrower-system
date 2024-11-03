@@ -2,12 +2,12 @@
 
 {% block content %}
     <div class="home-container">
-        <button class="scan-printer-button" onclick="ScanPrinter()">
-            Scan for Printer
-        </button>
-        <br>
         <button class="scan-paper-button" onclick="ScanPaper()">
             Scan Paper
+        </button>
+        <br>
+        <button class="scan-paper-button">
+            Submit
         </button>
         <br>
         <form method="POST" action="{% url 'manual_input' %}">
@@ -45,3 +45,4 @@
         }
     </script>
 {% endblock content %}
+

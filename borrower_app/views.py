@@ -25,7 +25,7 @@ def upload_and_process_file(request):
             return redirect('success_page')
         else:
             messages.error(request, "Please correct the errors below.")
-            return render(request, 'borrower_app/form.html', {'form': form})
+            return render(request, 'borrower_app/home.html', {'form': form})
 
     # Provide an empty form if GET request
     form = BorrowerForm()
