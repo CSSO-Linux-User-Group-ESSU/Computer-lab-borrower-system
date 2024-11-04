@@ -36,7 +36,7 @@ body{
 }
 
 .nav-home {
-    margin-left: 36%;
+    margin-left: 40%;
     margin-top: 30px;
 }
 
@@ -226,12 +226,13 @@ input:-webkit-autofill {
     text-decoration: none;
 }
 
-.to-scanner{
+.cancel-btn{
     text-decoration: none;
     background-color: #005a32;
     color: white;
     padding: 15px 50px;
     border-radius: 5px;
+    border: none;
 }
 
 
@@ -262,17 +263,17 @@ input:-webkit-autofill {
 
 .modify-btn-pending {
     margin-top: 10px;
-    margin-left: 35%;
+    margin-left: 30%;
 }
 
 .delete-btn-pending {
     margin-top: 10px;
-    margin-left:50%;
+    margin-left:45%;
 }
 
 .return-btn-pending {
     margin-top: 10px;
-    margin-left:21%;
+    margin-left:16%;
 }
 
 
@@ -301,7 +302,7 @@ input:-webkit-autofill {
     width: 200px;
     padding: 10px 15px;
     margin-top: 9px;
-    margin-left: 74%;
+    margin-left: 65%;
     font-size: 16px;
     border: 2px solid #ccc;
     border-radius: 25px;
@@ -327,8 +328,8 @@ input:-webkit-autofill {
     background-color: #4CAF50; /* Green background */
     color: white; /* White text */
     border: none;
-    margin-left: 90%;
-    margin-top: 11px;
+    margin-left: 81%;
+    margin-top: 10px;
     padding: 12px 20px;
     font-size: 16px;
     border-radius: 25px;
@@ -437,6 +438,38 @@ table.borrowers tr:hover {
 }
 
 
+
+/* CSS for Returned*/
+.returns-heading {
+    margin-left: 20px;
+    margin-right: 0px;
+    margin-top: 5px;
+    margin-bottom: 0px;
+    position: fixed;
+}
+
+.delete-btn-returns{
+    color: black;
+    font-weight: bold;
+    font-size: 16px;
+    background: #f8fff6;
+    padding: 8px 30px;
+    border-radius: 10px;
+    position: fixed;
+    cursor: pointer;
+}
+
+.delete-btn-returns {
+    margin-top: 0px;
+    margin-left:50%;
+}
+
+.delete-btn-returns:disabled {
+    background-color: #d3d3d3;
+    color: #888;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
 
 /* CSS for Success Page */
 .success_container{

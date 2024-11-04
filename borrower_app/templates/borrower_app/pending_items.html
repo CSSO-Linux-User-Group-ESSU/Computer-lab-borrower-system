@@ -60,7 +60,7 @@
     modifyButton.addEventListener('click', () => {
     const selectedIds = [...checkboxes].filter(cb => cb.checked).map(cb => cb.value);
     if (selectedIds.length === 1) {
-        const modifyUrl = "{% url 'modify_borrower' 0 %}".replace("0", selectedIds[0]);
+        const modifyUrl = "{% url 'edit_borrower' 0 %}".replace("0", selectedIds[0]);
         window.location.href = modifyUrl;
     } else {
         alert("Please select exactly one borrower to modify.");

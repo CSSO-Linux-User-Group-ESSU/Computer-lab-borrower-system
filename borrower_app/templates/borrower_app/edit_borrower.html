@@ -1,22 +1,65 @@
 {% extends "borrower_app/control_panel.html" %}
 
 {% block content %}
-<form method="POST"  action="{% url 'modify_borrower' borrower.id %}">
-    {% csrf_token %}
-    <h1 class="form-header">FORM</h1>
-    <div class="data-container">
-        <label>Last Name:</label>
-        <input type="text" name="last_name" value="{{ borrower.last_name }}" required><br>
-        <label>First Name:</label>
-        <input type="text" name="first_name" value="{{ borrower.first_name }}" required><br>
-        <label>Middle Name:</label>
-        <input type="text" name="middle_name" value="{{ borrower.middle_name }}" required><br>
-        <label>Item Name:</label>
-        <input type="text" name="item_name" value="{{ borrower.item_name }}" required><br>
-        <label>Item Quantity:</label>
-        <input type="number" name="item_quantity" value="{{ borrower.item_quantity }}" required><br>
-        <button type="submit" class="save-btn">Save Changes</button>
-        <button type="submit" class="cancel-btn">Cancel</button>
-    </div>
-</form>
+
+    <form method="POST" action="{% url 'edit_borrower' borrower.id %}">
+        {% csrf_token %}
+
+        <div class="data-container">
+            <h1 class="form-header">FORM</h1>
+            <div class="form-row">
+                <div class="form-field">
+                    <label>Last Name:</label>
+                    <input type="text" name="last_name" value="{{ borrower.last_name }}" required oninput="capitalizeFirstLetter(this)">
+                </div>
+
+                <div class="form-field">
+                    <label>Item Name:</label>
+                    <input type="text" name="item_name" value="{{ borrower.item_name }}" required oninput="capitalizeFirstLetter(this)">
+                    <datalist id="items">
+                        <option value="Projector"></option>
+                        <option value="LED"></option>
+                        <option value="Monitor"></option>
+                        <option value="Keyboard"></option>
+                        <option value="Mouse"></option>
+                        <option value="System Unit"></option>
+                        <option value="UPS"></option>
+                        <option value="Sub Cord"></option>
+                        <option value="Power Cord"></option>
+                    </datalist>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-field">
+                    <label>First Name:</label>
+                    <input type="text" name="first_name" value="{{ borrower.first_name }}" oninput="capitalizeFirstLetter(this)">
+                </div>
+
+                <div class="form-field">
+                    <label>Item Quantity:</label>
+                    <input type="number" name="item_quantity" value="{{ borrower.item_quantity }}" required>
+                </div>
+            </div>
+
+            <div class="form-field">
+                <label>Middle Name:</label>
+                <br>
+                <input type="text" name="middle_name" value="{{ borrower.middle_name }}" required oninput="capitalizeFirstLetter(this)">
+            </div>
+            <div class="button-container">
+                <a href="{% url 'pending_items' %}" class="cancel-btn">Cancel</a>
+                <button type="submit" class="save-btn">Save</button>
+            </div>
+        </div>
+    </form>
+
+<script>
+    function capitalizeFirstLetter(input) {
+        const value = input.value;
+        if (value) {
+            input.value = value.charAt(0).toUpperCase() + value.slice(1);
+        }
+    }
+</script>
 {% endblock content %}

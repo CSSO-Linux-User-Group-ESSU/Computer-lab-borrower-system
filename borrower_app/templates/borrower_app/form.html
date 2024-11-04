@@ -48,7 +48,7 @@
                 <input type="text" name="middle_name" value="{{ form.middle_name.value|default:'' }}" required oninput="capitalizeFirstLetter(this)">
             </div>
             <div class="button-container">
-                <a href="{% url 'home' %}" class="to-scanner">Cancel</a>
+                <a href="{% url 'home' %}" class="cancel-btn">Cancel</a>
                 <button type="submit" class="save-btn">Save</button>
             </div>
         </div>
