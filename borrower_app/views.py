@@ -152,4 +152,4 @@ def scan_paper(request):
             else:
                 return HttpResponse('Not Scanned')
         else:
-            return HttpResponse('Not Scanned')
+            return HttpResponse('No Scanner Connected.')
