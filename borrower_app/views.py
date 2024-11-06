@@ -133,23 +133,23 @@ def scan_printer(request):
 
 
 def scan_paper(request):
-    image_path = 'HTR/scannedImages/scanned_form.png'
-    with open(image_path, 'wb') as f:
-        is_scan = subprocess.run('scanimage --format=png --mode Color --resolution 600 --brightness 50 --contrast 50',
-                                 stdout=f, shell=True)
-        if is_scan.returncode == 0:
+    image_path = 'HTR/scannedImages/forms.jpg'
+    # with open(image_path, 'wb') as f:
+        # is_scan = subprocess.run('scanimage --format=png --mode Color --resolution 600 --brightness 50 --contrast 50',
+        #                          stdout=f, shell=True)
+        # if is_scan.returncode != 0:
 
             # Cropping the scanned image
-            image = cv2.imread(image_path)
-            h, w, _ = image.shape
-            image = image[:, :w // 2]
-            cv2.imwrite(image_path, image)
+            # image = cv2.imread(image_path)
+            # h, w, _ = image.shape
+            # image = image[:, :w // 2]
+            # cv2.imwrite(image_path, image)
 
-            # Doing now the actual scanning
-            scan = subprocess.run(f'python3 HTR/ocr.py {image_path}', shell=True)
-            if scan.returncode == 0:
-                return HttpResponse('Scanned')
-            else:
-                return HttpResponse('Not Scanned')
-        else:
-            return HttpResponse('No Scanner Connected.')
+        # Doing now the actual scanning
+    scan = subprocess.run(f'python3 HTR/ocr.py {image_path}', shell=True)
+    if scan.returncode == 0:
+        return HttpResponse('Scanned')
+    else:
+        return HttpResponse('Not Scanned')
+    
+    return HttpResponse('No Scanner Connected.')
