@@ -99,3 +99,4 @@ local_settings.py
 .venv
 .env
 db.sqlite3
+.~lock.forms.docx#
