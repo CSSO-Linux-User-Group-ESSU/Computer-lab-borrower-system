@@ -75,7 +75,7 @@ def ocr_image(image):
         pil_img = Image.fromarray(image)
 
         # Custom configuration for tesseract (LSTM OCR engine, automatic page segmentation)
-        custom_config = r'--tessdata-dir "/usr/share/tesseract-ocr/5/tessdata" -l handwriting_model --psm 6 --oem 3'
+        custom_config = r'-l eng+fil+spa+eng_handwritten --psm 6 --oem 3'
 
         # Perform OCR using pytesseract
         text = pytesseract.image_to_string(pil_img, config=custom_config)
@@ -97,7 +97,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Path to the image
-    image_path =  args.image_path or 'HTR/scannedImages/scanned_form.png'
+    image_path =  args.image_path or 'HTR/scannedImages/forms.jpg'
     crop_path = f'HTR/croppedImages/Borrow-{date}.jpg'
 
     # Preprocess the image
