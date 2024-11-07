@@ -10,7 +10,39 @@ import json
 import cv2
 from .form import BorrowerForm
 from datetime import date
-import os
+from django.contrib.auth.models import User
+
+
+def signup(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        password2 = request.POST.get("password2")
+
+        if not password2:
+            messages.error(request, "Password confirmation is required.")
+            return redirect("sign_up")
+
+        if password != password2:
+            messages.error(request, "Passwords do not match.")
+            return redirect("sign_up")
+        user, created = User.objects.get_or_create(username=username, email=email)
+
+        if created:
+            user.set_password(password)
+            user.is_staff = True
+            user.is_superuser = True
+            user.save()
+            messages.success(request, "User created successfully.")
+            return render(request, "borrower_app/home.html")
+
+        else:
+            messages.error(request, "User already exists.")
+            return redirect("sign_in")
+
+    return render(request, "borrower_app/sign_in.html")
+
 
 
 

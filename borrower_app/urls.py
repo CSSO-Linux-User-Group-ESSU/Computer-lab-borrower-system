@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.logins, name="login"),
+    path('sign_up/',views.signup, name='sign_up'),
     path('sign_in/', views.sign_in, name="sign_in"),
     path('logout/', views.log_out, name="logout"),
     path('control_panel/', views.control_panel, name="control_panel"),

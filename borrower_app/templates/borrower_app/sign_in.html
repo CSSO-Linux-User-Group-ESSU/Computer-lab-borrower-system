@@ -7,33 +7,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'borrower_app/css/sign_in.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM3KQh2p/5ZgZxuj+fYbPj4WmTgWgdm0M3RQtxg" crossorigin="anonymous">
-    <title>Sign In</title>
+    <title>Sign Up</title>
 </head>
 <body>
 
-    <form action="{% url 'login' %}" method="POST">
+    <form action="{% url 'sign_up' %}" method="POST">
         {% csrf_token %}
         <div class="main-container">
             <div class="login-container">
                 <div class="left-box">
                     <div class="header-text">
-                        <h2>Sign in</h2>
+                        <h2>Sign Up</h2>
                     </div>
-                        <input  type="email" class="input-field" placeholder="Email" id="email" name="email">
-                        <input  type="text" class="input-field" placeholder="Username" id="username" name="username">
-                        <input type="password" class="input-field" placeholder="Password" id="password" name="password">
-                        <input type="password" class="input-field" placeholder="Confirm Password" id="confirm_password" name="confirm_password">
-                    <div class="input-group">
-                    <form action="{% url 'login' %}" method="POST">
-                        {% csrf_token %}
-                        <button class="login-btn" type="submit">Sign In</button>
-                        </form>
-                    <form action="{% url 'login' %}" method="POST">
-                        {% csrf_token %}
-                        <button class="cancel-btn" type="submit">Cancel</button>
 
+                    <!-- Display error messages if any -->
+                    {% if messages %}
+                        <div class="error-messages">
+                            {% for message in messages %}
+                                <div class="error-message">{{ message }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <input type="text" class="input-field" placeholder="Username" id="username" name="username" required>
+                    <input type="email" class="input-field" placeholder="Email" id="email" name="email" required>
+                    <input type="password" class="input-field" placeholder="Password" id="password" name="password" required>
+                    <input type="password" class="input-field" placeholder="Confirm Password" id="password2" name="password2" required>
+
+                    <div class="input-group">
+                        <button class="login-btn" type="submit">Sign Up</button>
                     </div>
                 </div>
+
                 <div class="right-box">
                     <div class="featured-image">
                         <img src="{% static 'borrower_app/images/essu_logo.jpg' %}" class="img-fluid">
@@ -42,6 +47,7 @@
                 </div>
             </div>
         </div>
+    </form>
 
 </body>
 </html>
