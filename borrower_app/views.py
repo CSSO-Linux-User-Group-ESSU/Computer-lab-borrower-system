@@ -10,6 +10,54 @@ import json
 import cv2
 from .form import BorrowerForm
 from datetime import date
+import os
+
+
+
+def read_txt_file(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            lines = file.readlines() 
+        return [line.strip() for line in lines]
+    except FileNotFoundError:
+        print("Pota ka wara didi")
+        return None
+
+def borrower_form_view(request):
+    
+    data = get_borrower_data()
+    forms = BorrowerForm(initial=data)
+
+    return render(request, 'borrower_app/scan_form.html',{"form":forms})
+        
+
+
+def get_borrower_data():
+    file_path = "C:/Users/warre/Borrowers/Computer-lab-borrower-system-main//borrower_app/static//borrower_app/data/data.txt"
+    txt_data = read_txt_file(file_path)
+    print(txt_data)
+
+    if txt_data:
+        borrower_data = {
+            'last_name': txt_data[0],
+            'first_name': txt_data[1],
+            'middle_name': txt_data[2],
+            'item_name': txt_data[3],
+            'item_quantity': int(txt_data[4]),
+            'date_borrowed': txt_data[5] if len(txt_data) > 5 else '',
+        }
+    else:
+        borrower_data = {
+            'last_name': '',
+            'first_name': '',
+            'middle_name': '',
+            'item_name': '',
+            'item_quantity': 0,
+            'date_borrowed': '',
+        }
+
+    return borrower_data
+
 
 
 def upload_and_process_file(request):
@@ -40,7 +88,6 @@ def manual_input(request):
     return render(request, 'borrower_app/form.html')
 
 
-# Create your views here.
 def logins(request):
     return render(request, 'borrower_app/login.html')
 
@@ -82,6 +129,11 @@ def return_items(request):
 
 
 def pending_items(request):
+    if request.method=="POST":
+        form = BorrowerForm(request.POST)
+
+        if form.is_valid():
+            form.save()
     borrowers = BorrowerInfo.objects.all()
     return render(request, 'borrower_app/pending_items.html', {'borrowers': borrowers})
 
@@ -92,7 +144,7 @@ def delete_borrower(request, borrower_id):
     if request.method == "POST":
         borrower.delete()
         messages.success(request, "Borrower deleted successfully!")
-        return redirect('pending_items')
+        return redirect('pending_items') 
 
     return render(request, 'borrower_app/confirm_delete.html', {'borrower': borrower})
 
@@ -102,10 +154,8 @@ def delete_borrowers(request):
         data = json.loads(request.body)
         borrower_ids = data.get('borrower_ids', [])
 
-        # Delete the borrowers with the provided IDs
         BorrowerInfo.objects.filter(id__in=borrower_ids).delete()
 
-        # Return a success response
         return JsonResponse({'success': True})
     return JsonResponse({'success': False})
 
