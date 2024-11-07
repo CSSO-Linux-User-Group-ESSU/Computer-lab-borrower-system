@@ -85,7 +85,10 @@ def success_page(request):
 
 
 def manual_input(request):
-    return render(request, 'borrower_app/form.html')
+    data = get_borrower_data()
+    forms = BorrowerForm(initial=data)
+
+    return render(request, 'borrower_app/form.html',context={"form":forms})
 
 
 def logins(request):
