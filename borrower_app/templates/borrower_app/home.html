@@ -6,9 +6,12 @@
             Scan Paper
         </button>
         <br>
+        <form method="POST" action="{% url 'borrower_form_view' %}">
+            {% csrf_token %}
         <button class="scan-paper-button">
             Submit
         </button>
+        </form>
         <br>
         <form method="POST" action="{% url 'manual_input' %}">
             {% csrf_token %}

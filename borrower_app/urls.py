@@ -19,6 +19,6 @@ urlpatterns = [
     path('upload/', views.upload_and_process_file, name='upload_and_process_file'),
     path('success_page/',views.success_page,name='success_page'),
     path('manual_input/', views.manual_input, name='manual_input'),
-    path('borrower_form/', views.borrower_form_view, name='borrower_form'),
+    path('borrower_form_view/', views.borrower_form_view, name='borrower_form_view'),
     path('api/get-borrower-data/', views.get_borrower_data, name='get_borrower_data'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

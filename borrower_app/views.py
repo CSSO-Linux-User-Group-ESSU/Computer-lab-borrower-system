@@ -24,11 +24,9 @@ def read_txt_file(file_path):
         return None
 
 def borrower_form_view(request):
-    
     data = get_borrower_data()
     forms = BorrowerForm(initial=data)
-
-    return render(request, 'borrower_app/scan_form.html',{"form":forms})
+    return render(request, 'borrower_app/form.html',context={"form":forms})
         
 
 
@@ -85,10 +83,7 @@ def success_page(request):
 
 
 def manual_input(request):
-    data = get_borrower_data()
-    forms = BorrowerForm(initial=data)
-
-    return render(request, 'borrower_app/form.html',context={"form":forms})
+    return render(request, "borrower_app/form.html")
 
 
 def logins(request):
