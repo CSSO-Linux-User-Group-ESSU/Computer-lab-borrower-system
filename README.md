@@ -15,7 +15,7 @@ This project is designed to streamline the borrowing process in our computer lab
 - Django
 - SQLite (for database)
 - pillow & opencv (for image processing)
-- Tesseract
+- Tesseract (for OCR functionality)
 
 ## Installation
 
@@ -31,6 +31,22 @@ This project is designed to streamline the borrowing process in our computer lab
   ```bash
     pip install -r requirements.txt
   ```
+ - Install Tesseract:
+   - Linux (Debian/Ubuntu):
+     ```bash
+     sudo apt update
+     sudo apt install tesseract-ocr
+     sudo apt install libtesseract-dev
+     ```
+   - macOS (Homebrew):
+     ```bash
+     brew install tesseract
+     ```
+   - Windows
+     - Download the Tesseract installer from [Tesseract at UB Mannheim](https://github.com/UB-Mannheim/tesseract/wiki).
+     - Run the installer and follow the instructions.
+     - Add the Tesseract installation path (e.g., C:\Program Files\Tesseract-OCR) to your system’s PATH environment variable.
+  
 - Run the server:
   ```bash
     python manage.py runserver
