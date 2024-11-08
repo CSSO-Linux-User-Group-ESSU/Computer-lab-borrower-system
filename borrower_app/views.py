@@ -190,9 +190,6 @@ def success_page(request):
     return render(request, "borrower_app/success_page.html")
 
 
-def manual_input(request):
-    return render(request, "borrower_app/form.html")
-
 
 def logins(request):
     return render(request, 'borrower_app/login.html')
