@@ -78,7 +78,7 @@ body {
 }
 
 
-.login-btn, .cancel-btn{
+.signup-btn{
     margin-bottom: 20px;
     width: 100%;
     padding: 12px;
@@ -92,14 +92,29 @@ body {
     transition: background-color 0.3s ease;
 }
 
+.cancel-btn {
+    margin-bottom: 20px;
+    padding: 11px 122px;
+    font-size: 16px;
+    font-weight: 500;
+    background-color: #e7e1e5;
+    color: black;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(231, 135, 135);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
 
 
-.login-btn:hover {
+.signup-btn:hover {
     background-color: #0c6d3f;
 }
 
 .cancel-btn:hover {
-    background-color: #0c6d3f;
+    background-color: #bc6b8a;
 }
 
 .nav-link {
@@ -108,20 +123,24 @@ body {
 }
 
 
+.error-messages {
+    margin-bottom: 15px;
+}
 
+.error-message {
+    background-color: #f8d7da; /* Light red background */
+    color: #721c24;           /* Dark red text */
+    border: 1px solid #f5c6cb; /* Red border */
+    padding: 10px 15px;       /* Padding around the message */
+    border-radius: 5px;       /* Rounded corners */
+    font-weight: bold;        /* Bold text */
+    font-size: 14px;          /* Font size */
+    margin: 5px 0;            /* Space between error messages */
+    display: flex;            /* Flexbox for icon and text alignment */
+    align-items: center;      /* Center align icon and text */
+}
 
-@media (max-width: 768px) {
-    .login-container {
-        flex-direction: column;
-        width: 90%;
-    }
-
-    .right-box {
-        height: 150px;
-        padding: 20px;
-    }
-
-    .left-box {
-        padding: 20px;
-    }
+.error-icon {
+    margin-right: 8px;       /* Space between icon and message text */
+    color: #721c24;          /* Match icon color with text */
 }

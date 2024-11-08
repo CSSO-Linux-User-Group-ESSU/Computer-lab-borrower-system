@@ -3,9 +3,8 @@
 {% block content %}
     <h1 class="pend-heading">Returned Items</h1>
     <div class="button-container">
-        <button id="return-button" class="return-btn-pending" disabled>Item Returned</button>
-        <button id="modify-button" class="modify-btn-pending" disabled>Modify Selected</button>
-        <button id="delete-button" class="delete-btn-pending" disabled>Delete Selected</button>
+        <button id="modify-button" class="modify-btn-return" disabled>Modify Selected</button>
+        <button id="delete-button" class="delete-btn-return" disabled>Delete Selected</button>
         <input type="search" class="search-borrower" placeholder="Search Last Name" id="search" name="search">
         <button id="search_button" class="search-btn">Search</button>
     </div>
@@ -22,10 +21,21 @@
                     <th>Date Borrowed</th>
                 </tr>
             </thead>
+            <tbody>
+                {% for item in returned_items %}
+                <tr>
+                    <td><input type="checkbox" class="select-borrower" value="{{ item.id }}"></td>
+                    <td>{{ item.last_name }}</td>
+                    <td>{{ item.first_name }}</td>
+                    <td>{{ item.middle_name }}</td>
+                    <td>{{ item.item_name }}</td>
+                    <td>{{ item.item_quantity }}</td>
+                    <td>{{ item.date_borrowed }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
         </table>
     </div>
-
-
 
 <script>
     const modifyButton = document.getElementById('modify-button');
@@ -35,26 +45,25 @@
     const searchButton = document.getElementById('search_button');
     const tableBody = document.querySelector('#borrowers-table tbody');
 
-    // Enable buttons if any checkbox is selected
-    checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', () => {
-            const anyChecked = [...checkboxes].some(cb => cb.checked);
-            modifyButton.disabled = !anyChecked;
-            deleteButton.disabled = !anyChecked;
-        });
-    });
-
-    modifyButton.addEventListener('click', () => {
-    const selectedIds = [...checkboxes].filter(cb => cb.checked).map(cb => cb.value);
-    if (selectedIds.length === 1) {
-        const modifyUrl = "{% url 'edit_borrower' 0 %}".replace("0", selectedIds[0]);
-        window.location.href = modifyUrl;
-    } else {
-        alert("Please select exactly one borrower to modify.");
+    // Enable/disable buttons based on checkbox selection
+    function updateButtonState() {
+        const selectedItems = [...checkboxes].filter(cb => cb.checked);
+        modifyButton.disabled = selectedItems.length !== 1;
+        deleteButton.disabled = selectedItems.length === 0;
     }
+
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', updateButtonState);
     });
 
-    // Handle delete button click
+    // Modify button logic
+    modifyButton.addEventListener('click', () => {
+        const selectedId = [...checkboxes].find(cb => cb.checked).value;
+        const modifyUrl = "{% url 'edit_borrower' 0 %}".replace("0", selectedId);
+        window.location.href = modifyUrl;
+    });
+
+    // Delete button logic
     deleteButton.addEventListener('click', () => {
         const selectedIds = [...checkboxes].filter(cb => cb.checked).map(cb => cb.value);
         if (selectedIds.length > 0) {
@@ -69,7 +78,10 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
+                    alert("Selected items deleted successfully.");
                     location.reload();
+                } else {
+                    alert("An error occurred while deleting items.");
                 }
             });
         }
@@ -80,7 +92,6 @@
         const searchValue = searchInput.value.trim().toLowerCase();
         const rows = [...tableBody.querySelectorAll('tr')];
 
-        // Separate matching and non-matching rows
         const matchingRows = rows.filter(row =>
             row.cells[1].textContent.trim().toLowerCase().includes(searchValue)
         );
@@ -88,7 +99,6 @@
             !row.cells[1].textContent.trim().toLowerCase().includes(searchValue)
         );
 
-        // Clear the table and append rows with matching ones first
         tableBody.innerHTML = '';
         matchingRows.forEach(row => tableBody.appendChild(row));
         nonMatchingRows.forEach(row => tableBody.appendChild(row));

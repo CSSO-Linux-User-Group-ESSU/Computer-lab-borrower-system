@@ -22,4 +22,5 @@ urlpatterns = [
     path('manual_input/', views.manual_input, name='manual_input'),
     path('borrower_form_view/', views.borrower_form_view, name='borrower_form_view'),
     path('api/get-borrower-data/', views.get_borrower_data, name='get_borrower_data'),
+    path('transfer_borrowers/', views.transfer_borrowers, name='transfer_borrowers'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

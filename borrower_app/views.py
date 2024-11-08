@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 import django.contrib.messages as messages
-from .models import BorrowerInfo
+from .models import BorrowerInfo, ReturnedItem
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
@@ -11,6 +11,76 @@ import cv2
 from .form import BorrowerForm
 from datetime import date
 from django.contrib.auth.models import User
+from django.views.decorators.csrf import csrf_exempt
+
+    
+
+
+@csrf_exempt
+def transfer_borrowers(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            borrower_ids = data.get("borrower_ids", [])
+            
+            if not borrower_ids:
+                return JsonResponse({"success": False, "message": "No items selected for transfer."})
+            
+            # Log to verify receipt of IDs
+            print("Received borrower IDs for transfer:", borrower_ids)
+
+            successful_transfers = []
+            errors = []
+
+            for borrower_id in borrower_ids:
+                try:
+                    borrower = BorrowerInfo.objects.get(id=borrower_id)
+                    
+                    # Create a ReturnedItem instance
+                    returned_item = ReturnedItem.objects.create(
+                        last_name=borrower.last_name,
+                        first_name=borrower.first_name,
+                        middle_name=borrower.middle_name,
+                        item_name=borrower.item_name,
+                        item_quantity=borrower.item_quantity,
+                        date_borrowed=borrower.date_borrowed,
+                    )
+                    
+                    # Confirm the transfer by checking if returned_item was created
+                    if returned_item:
+                        successful_transfers.append(borrower_id)
+                        # Delete the Borrower record only if transfer was successful
+                        borrower.delete()
+                    else:
+                        errors.append(f"Failed to create ReturnedItem for borrower ID {borrower_id}")
+
+                except BorrowerInfo.DoesNotExist:
+                    errors.append(f"Borrower with ID {borrower_id} does not exist.")
+                except Exception as e:
+                    errors.append(f"Error transferring borrower ID {borrower_id}: {str(e)}")
+            
+            # Provide feedback on which IDs were successfully transferred or had issues
+            if successful_transfers:
+                success_message = f"Items successfully transferred and deleted: {successful_transfers}"
+            else:
+                success_message = "No items were successfully transferred."
+
+            error_message = f"Issues with the following items: {errors}" if errors else "No issues."
+
+            return JsonResponse({
+                "success": True if successful_transfers else False,
+                "message": success_message,
+                "errors": error_message,
+            })
+
+        except json.JSONDecodeError:
+            return JsonResponse({"success": False, "message": "Invalid data format."})
+    else:
+        return JsonResponse({"success": False, "message": "Invalid request method."})
+
+
+
+
 
 
 def signup(request):
@@ -155,7 +225,9 @@ def home(request):
 
 
 def return_items(request):
-    return render(request, 'borrower_app/return_items.html')
+    returned_items = ReturnedItem.objects.all()
+    return render(request, "borrower_app/return_items.html", {"returned_items": returned_items})
+
 
 
 def pending_items(request):
