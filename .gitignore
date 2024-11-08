@@ -65,7 +65,7 @@ pip-log.txt
 pip-delete-this-directory.txt
 db.sqlite3
 
-# Unit test / coverage reports
+# Unit test / coverage reports h
 db.sqlite3
 htmlcov/
 .tox/
