@@ -128,7 +128,7 @@ def read_txt_file(file_path):
 def borrower_form_view(request):
     data = get_borrower_data()
     forms = BorrowerForm(initial=data)
-    return render(request, 'borrower_app/form.html',context={"form":forms})
+    return render(request, 'borrower_app/home.html',context={"form":forms})
         
 
 

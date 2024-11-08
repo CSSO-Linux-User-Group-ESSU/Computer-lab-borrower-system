@@ -1,45 +1,101 @@
 {% extends "borrower_app/control_panel.html" %}
 
 {% block content %}
-    <div class="home-container">
-        <button class="scan-paper-button" onclick="ScanPaper()">
-            Scan Paper
-        </button>
-        <br>
-        <form method="POST" action="{% url 'borrower_form_view' %}">
-            {% csrf_token %}
-        <button class="scan-paper-button">
-            Submit
-        </button>
-        </form>
-        <br>
-        <form method="POST" action="{% url 'manual_input' %}">
-            {% csrf_token %}
-            <button class="manual-button">Enter Manually</button>
-        </form>
-    </div>
-    <br>
+<div class="main-container">
+    <form method="POST" action="{% url 'upload_and_process_file' %}">
+        {% csrf_token %}
 
-    <div class="pic-container">
-            <p id="scan-status" class="scan-info"></p>
-    </div>
+        <div class="data-container">
+            <h1 class="form-header">FORM</h1>
+            <div class="form-row">
+                <div class="form-field">
+                    <label>Last Name:</label>
+                    <input type="text" name="last_name" value="{{ form.last_name.value|default:'' }}" required oninput="capitalizeFirstLetter(this)">
+                </div>
 
-    <script>
-        
-        function ScanPaper() {
-            const scanStatus = document.getElementById('scan-status');
-            scanStatus.textContent = "Scanning...";
+                <div class="form-field">
+                    <label>Item Name:</label>
+                    <input type="text" name="item_name" list="items" value="{{ form.item_name.value|default:'' }}" required oninput="capitalizeFirstLetter(this)">
+                    <datalist id="items">
+                        <option value="Projector"></option>
+                        <option value="LED"></option>
+                        <option value="Monitor"></option>
+                        <option value="Keyboard"></option>
+                        <option value="Mouse"></option>
+                        <option value="System Unit"></option>
+                        <option value="UPS"></option>
+                        <option value="Sub Cord"></option>
+                        <option value="Power Cord"></option>
+                    </datalist>
+                </div>
+            </div>
 
-            fetch('/scan/')
-                .then(response => response.text())
-                .then(data => {
-                    scanStatus.textContent = data;
-                })
-                .catch(error => {
-                    console.error("Error:", error);
-                    scanStatus.textContent = "Error scanning paper.";
-                });
+            <div class="form-row">
+                <div class="form-field">
+                    <label>First Name:</label>
+                    <input type="text" name="first_name" value="{{ form.first_name.value|default:'' }}" required oninput="capitalizeFirstLetter(this)">
+                </div>
+
+                <div class="form-field">
+                    <label>Item Quantity:</label>
+                    <input type="number" name="item_quantity" value="{{ form.item_quantity.value|default:'' }}" required>
+                </div>
+            </div>
+
+            <div class="form-field">
+                <label>Middle Name:</label>
+                <br>
+                <input type="text" name="middle_name" value="{{ form.middle_name.value|default:'' }}" required oninput="capitalizeFirstLetter(this)">
+            </div>
+            <div class="button-container">
+                <a href="{% url 'home' %}" class="cancel-btn">Clear</a>
+                <button type="submit" class="save-btn">Save</button>
+            </div>
+        </div>
+    </form>
+
+        <div class="scan-container">
+            <p>Optional: For Scanning Paper</p>
+            <div class="info-container">
+                <p id="scan-status" class="scan-info"></p>
+        </div>
+            <div class="button-container-scan">
+                <button class="scan-paper-button" onclick="ScanPaper()">
+                    Scan Paper
+                </button>
+                <br>
+                <form method="POST" action="{% url 'borrower_form_view' %}">
+                    {% csrf_token %}
+                <button class="submit-button">
+                    Submit
+                </button>
+        </div>
+        </div>
+</div>
+
+<script>
+    function capitalizeFirstLetter(input) {
+        const value = input.value;
+        if (value) {
+            input.value = value.charAt(0).toUpperCase() + value.slice(1);
         }
-    </script>
-{% endblock content %}
+    }
 
+    function ScanPaper() {
+        const scanStatus = document.getElementById('scan-status');
+        scanStatus.textContent = "Scanning...";
+
+        fetch('/scan/')
+            .then(response => response.text())
+            .then(data => {
+                scanStatus.textContent = data;
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                scanStatus.textContent = "Error scanning paper.";
+            });
+    }
+
+</script>
+
+{% endblock content %}
