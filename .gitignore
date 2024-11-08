@@ -100,3 +100,4 @@ local_settings.py
 .env
 db.sqlite3
 .~lock.forms.docx#
+*.pyc
