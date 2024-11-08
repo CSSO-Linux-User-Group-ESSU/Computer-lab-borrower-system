@@ -133,17 +133,23 @@ def borrower_form_view(request):
 
 
 def get_borrower_data():
-    file_path = "C:/Users/warre/Borrowers/Computer-lab-borrower-system-main//borrower_app/static//borrower_app/data/data.txt"
+    file_path = "HTR/data/data.txt"
     txt_data = read_txt_file(file_path)
     print(txt_data)
 
     if txt_data:
+        last_name = txt_data[0].title()
+        first_name = txt_data[1].title()
+        middle_name = txt_data[2].title()
+        item_name = txt_data[3].title()
+        item_quantity =int(txt_data[4])
+
         borrower_data = {
-            'last_name': txt_data[0],
-            'first_name': txt_data[1],
-            'middle_name': txt_data[2],
-            'item_name': txt_data[3],
-            'item_quantity': int(txt_data[4]),
+            'last_name': last_name,
+            'first_name': first_name,
+            'middle_name': middle_name,
+            'item_name': item_name,
+            'item_quantity': item_quantity,
             'date_borrowed': txt_data[5] if len(txt_data) > 5 else '',
         }
     else:
