@@ -97,7 +97,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Path to the image
-    image_path =  args.image_path or 'HTR/scannedImages/forms.jpg'
+    image_path =  args.image_path or 'HTR/scannedImages/scanned_form.png'
     crop_path = f'HTR/croppedImages/Borrow-{date}.jpg'
 
     # Preprocess the image

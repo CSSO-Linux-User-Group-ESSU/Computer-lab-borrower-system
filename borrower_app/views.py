@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 import django.contrib.messages as messages
-from .models import BorrowerInfo, ReturnedItem
+from .models import BorrowerInfo, ReturnedInfo
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
@@ -37,7 +37,7 @@ def transfer_borrowers(request):
                     borrower = BorrowerInfo.objects.get(id=borrower_id)
                     
                     # Create a ReturnedItem instance
-                    returned_item = ReturnedItem.objects.create(
+                    returned_item = ReturnedInfo.objects.create(
                         last_name=borrower.last_name,
                         first_name=borrower.first_name,
                         middle_name=borrower.middle_name,
@@ -231,7 +231,7 @@ def home(request):
 
 
 def return_items(request):
-    returned_items = ReturnedItem.objects.all()
+    returned_items = ReturnedInfo.objects.all()
     return render(request, "borrower_app/return_items.html", {"returned_items": returned_items})
 
 
@@ -246,16 +246,6 @@ def pending_items(request):
     return render(request, 'borrower_app/pending_items.html', {'borrowers': borrowers})
 
 
-def delete_borrower(request, borrower_id):
-    borrower = get_object_or_404(BorrowerInfo, id=borrower_id)
-
-    if request.method == "POST":
-        borrower.delete()
-        messages.success(request, "Borrower deleted successfully!")
-        return redirect('pending_items') 
-
-    return render(request, 'borrower_app/confirm_delete.html', {'borrower': borrower})
-
 
 def delete_borrowers(request):
     if request.method == "POST":
@@ -266,6 +256,18 @@ def delete_borrowers(request):
 
         return JsonResponse({'success': True})
     return JsonResponse({'success': False})
+
+
+def delete_returns(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        borrower_ids = data.get('borrower_ids', [])
+
+        ReturnedInfo.objects.filter(id__in=borrower_ids).delete()
+
+        return JsonResponse({'success': True})
+    return JsonResponse({'success': False})
+
 
 
 def edit_borrower(request, borrower_id):
@@ -291,23 +293,23 @@ def scan_printer(request):
 
 
 def scan_paper(request):
-    image_path = 'HTR/scannedImages/forms.jpg'
-    # with open(image_path, 'wb') as f:
-        # is_scan = subprocess.run('scanimage --format=png --mode Color --resolution 600 --brightness 50 --contrast 50',
-        #                          stdout=f, shell=True)
-        # if is_scan.returncode != 0:
+    image_path = 'HTR/scannedImages/scanned_form.png'
+    with open(image_path, 'wb') as f:
+        is_scan = subprocess.run('scanimage --format=png --mode Color --resolution 600 --brightness 50 --contrast 50',
+                                 stdout=f, shell=True)
+        if is_scan.returncode != 0:
 
             # Cropping the scanned image
-            # image = cv2.imread(image_path)
-            # h, w, _ = image.shape
-            # image = image[:, :w // 2]
-            # cv2.imwrite(image_path, image)
+            image = cv2.imread(image_path)
+            h, w, _ = image.shape
+            image = image[:, :w // 2]
+            cv2.imwrite(image_path, image)
 
         # Doing now the actual scanning
-    scan = subprocess.run(f'python3 HTR/ocr.py {image_path}', shell=True)
-    if scan.returncode == 0:
-        return HttpResponse('Scanned')
-    else:
-        return HttpResponse('Not Scanned')
+            scan = subprocess.run(f'python3 HTR/ocr.py {image_path}', shell=True)
+            if scan.returncode == 0:
+                return HttpResponse('Scanned')
+            else:
+                return HttpResponse('Not Scanned')
     
     return HttpResponse('No Scanner Connected.')
