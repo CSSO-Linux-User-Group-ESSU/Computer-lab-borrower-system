@@ -13,7 +13,7 @@ class BorrowerInfo(models.Model):
         return f"{self.first_name} {self.last_name}"
 
 
-class ReturnedItem(models.Model):
+class ReturnedInfo(models.Model):
     last_name = models.CharField(max_length=100)
     first_name = models.CharField(max_length=100)
     middle_name = models.CharField(max_length=100)
